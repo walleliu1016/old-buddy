@@ -1,18 +1,30 @@
-.ac-card {
-  background: var(--surface);
-  border: 1rpx solid var(--line);
-  border-radius: var(--r-card);
-  padding: 28rpx;
-  margin-bottom: 24rpx;
-  box-shadow: var(--sh);
-}
-.ac-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14rpx; }
+/* 卡面基础样式（背景/圆角/阴影/内边距）来自全局 .card，此处只补布局与动效 */
+.ac-card { position: relative; margin-bottom: 24rpx; transition: transform .12s ease; }
+.ac-card:active { transform: scale(.985); }
+
+/* 顶部行：左分类 tag，右费用 pill + 收藏 */
+.ac-top { display: flex; align-items: center; justify-content: space-between; gap: 16rpx; margin-bottom: 14rpx; }
+.ac-right { display: flex; align-items: center; gap: 14rpx; }
+.ac-right .fee { margin-top: 0; }
+
+/* 收藏按钮（右上角） */
 .fav {
   width: 72rpx; height: 72rpx; border-radius: 20rpx;
   border: 1rpx solid var(--line); background: var(--surface-2);
   display: flex; align-items: center; justify-content: center; color: var(--ink-3);
+  transition: transform .12s ease;
 }
+.fav:active { transform: scale(.86); }
 .fav.on { color: var(--accent); border-color: var(--accent-soft); background: var(--accent-soft); }
-.ac-title { font-size: 34rpx; font-weight: 700; color: var(--ink); line-height: 1.4; margin-bottom: 18rpx; }
-.meta { display: flex; align-items: center; gap: 12rpx; color: var(--ink-2); font-size: 30rpx; margin-bottom: 10rpx; }
-.meta .dist { color: var(--primary-d); font-weight: 700; }
+
+/* 标题：最多两行截断 */
+.ac-title {
+  font-size: var(--fs-title); font-weight: 800; color: var(--ink); line-height: 1.35;
+  margin-bottom: 16rpx;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+
+/* 图标 meta 行 */
+.ac-meta { display: flex; align-items: center; gap: 12rpx; color: var(--ink-2); font-size: var(--fs-sub); margin-bottom: 8rpx; }
+.ac-meta:last-child { margin-bottom: 0; }
+.ac-meta .dist { color: var(--primary-d); font-weight: 700; }

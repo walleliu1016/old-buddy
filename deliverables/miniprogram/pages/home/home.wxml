@@ -1,23 +1,35 @@
 <view class="page {{bigFont?'big':''}}">
   <view class="hero">
-    <view class="greet">{{greeting}}，{{locationName}}的老朋友</view>
-    <view class="sub">附近的单次活动 · 按离您由近到远</view>
+    <view class="hero-top">
+      <view class="greet">{{greeting}}，老朋友</view>
+      <view class="loc-pill" bindtap="onLocate"><view class="i-mapPin-w i-20"></view><text>{{locationName}}</text></view>
+    </view>
+    <view class="sub"><view class="i-compass-w i-22"></view><text>附近的单次活动</text><text class="dot">·</text><view class="i-navigation-w i-22"></view><text>按离您由近到远</text></view>
   </view>
 
-  <view class="filter-bar">
-    <view class="fsum">
-      <view class="fpill loc" bindtap="onLocate"><view class="i-mapPin i-20"></view><text>{{locationName}}</text></view>
-      <text class="fpill">{{radius}}km</text>
-      <text class="fpill">{{catLabel}}</text>
-      <text class="fcount">{{summary}} 场</text>
-    </view>
-    <view class="filter-btn" bindtap="openFilter">筛选</view>
+  <!-- 吸顶快捷分类条 -->
+  <view class="quickbar">
+    <scroll-view scroll-x enhanced show-scrollbar="{{false}}" class="quick-scroll">
+      <view class="quick-row">
+        <view wx:for="{{categories}}" wx:key="key" class="chip {{item.key===fselCat?'on':''}}" bindtap="onQuickCat" data-cat="{{item.key}}">{{item.label}}</view>
+      </view>
+    </scroll-view>
+    <view class="qfilter" bindtap="openFilter"><view class="i-sliders i-22"></view><text>筛选</text></view>
   </view>
 
   <view class="sec-title"><view class="bar"></view>附近 · 本周活动</view>
-  <view class="hint">共 {{feed.length}} 场，点卡片看详情、收藏或报名</view>
+  <view class="hint">共 {{feed.length}} 场 · 附近 {{radius}}km，点卡片看详情、收藏或报名</view>
   <view class="feed">
-    <activity-card wx:for="{{feed}}" wx:key="id" activity="{{item}}" fav="{{item.fav}}" bind:tap="onCardTap" bind:fav="onCardFav"/>
+    <block wx:if="{{loading}}">
+      <view class="skl-card" wx:for="{{[1,2,3]}}" wx:key="*this">
+        <view class="skl skl-title"></view>
+        <view class="skl skl-line"></view>
+        <view class="skl skl-line short"></view>
+      </view>
+    </block>
+    <block wx:else>
+      <activity-card wx:for="{{feed}}" wx:key="id" activity="{{item}}" fav="{{item.fav}}" bind:tap="onCardTap" bind:fav="onCardFav"/>
+    </block>
     <view wx:if="{{feed.length===0 && !loading}}" class="empty">
       <view class="eico"><view class="i-search i-30"></view></view>
       附近 {{radius}}km 内暂无符合条件的活动，换个筛选或稍后再来看看。

@@ -24,7 +24,8 @@
     </view>
     <view wx:if="{{list.length===0}}" class="empty">
       <view class="eico"><view class="i-calendar i-30"></view></view>
-      {{tab==='pending' ? '还没有待参加的活动，去「附近」或「课程」看看。' : '还没有报名记录。'}}
+      <view>{{tab==='pending' ? '还没有待参加的活动，去「附近」或「课程」看看。' : '还没有报名记录。'}}</view>
+      <view class="ebtn" bindtap="goHome">去看看附近活动</view>
     </view>
   </view>
 

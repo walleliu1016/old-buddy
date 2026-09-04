@@ -55,7 +55,7 @@ Page({
   load(done) {
     const loc = app.globalData.location, r = app.globalData.radius;
     const cat = app.globalData.category || "all";
-    this.setData({ loading: true, radius: r, locationName: loc.name, catLabel: catLabelOf(cat) });
+    this.setData({ loading: true, radius: r, locationName: loc.name, catLabel: catLabelOf(cat), fselCat: cat });
     activitySrv.nearby(loc.lat, loc.lng, r, loc.name).then((d) => {
       const favs = storage.getFavorites();
       let list = (d.nearby || []);
@@ -92,6 +92,14 @@ Page({
   },
   closeFilter() { this.setData({ showFilter: false }); },
   noop() {},
+
+  /* 快捷分类：等价于筛选 sheet 里选分类后点「查看结果」（距离不变） */
+  onQuickCat(e) {
+    const cat = e.currentTarget.dataset.cat;
+    app.globalData.category = cat;
+    this.setData({ fselCat: cat, catLabel: catLabelOf(cat) });
+    this.load();
+  },
 
   onCardTap(e) { wx.navigateTo({ url: "/pages/detail/detail?id=" + e.detail.id }); },
   onCardFav(e) {

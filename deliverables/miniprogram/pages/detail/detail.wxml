@@ -7,7 +7,7 @@
     <view class="dico"><view class="i-{{iconName}} i-38"></view></view>
   </view>
 
-  <view class="panel">
+  <view class="panel card">
     <view class="row"><view class="ric"><view class="i-clock i-26"></view></view><view class="rc"><view class="rk">{{isCourse?'上课时间':'活动时间'}}</view><view class="rv">{{activity.schedule||activity.time}}</view></view></view>
     <view wx:if="{{isCourse}}" class="row"><view class="ric"><view class="i-calendar i-26"></view></view><view class="rc"><view class="rk">课时 · 开班</view><view class="rv">{{activity.weeks}} · {{activity.start}}</view></view></view>
     <view wx:if="{{isCourse}}" class="row"><view class="ric"><view class="i-user i-26"></view></view><view class="rc"><view class="rk">名额 · 截止</view><view class="rv">{{activity.seats}} · {{activity.deadline}}</view></view></view>
@@ -16,7 +16,7 @@
     <view wx:if="{{activity.signup}}" class="row"><view class="ric"><view class="i-info i-26"></view></view><view class="rc"><view class="rk">{{isCourse?'报名方式':'参加方式'}}</view><view class="rv">{{activity.signup}}</view></view></view>
   </view>
 
-  <view class="desc"><view class="dh3">{{isCourse?'课程介绍':'活动介绍'}}</view><text class="dp">{{activity.desc||(isCourse?'本课程由社区学校 / 老年大学组织，按周期授课，欢迎附近居民报名入学。具体课时与安排以开班通知为准。':'本场活动由社区组织，欢迎附近居民参与。具体内容与安排以现场为准。')}}</text></view>
+  <view class="desc card"><view class="dh3">{{isCourse?'课程介绍':'活动介绍'}}</view><text class="dp">{{activity.desc||(isCourse?'本课程由社区学校 / 老年大学组织，按周期授课，欢迎附近居民报名入学。具体课时与安排以开班通知为准。':'本场活动由社区组织，欢迎附近居民参与。具体内容与安排以现场为准。')}}</text></view>
 
   <view class="anti"><view class="i-shield i-26"></view><view class="at"><text class="b">防骗提醒：</text>报名与缴费请仅通过官方渠道。凡是要求您转账、提供短信验证码或付费“代抢名额”的，均为诈骗。</view></view>
 

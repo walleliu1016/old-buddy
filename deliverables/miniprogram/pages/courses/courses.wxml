@@ -1,10 +1,10 @@
 <view class="page {{bigFont?'big':''}}">
   <view class="chero">
-    <view class="ch-title"><view class="i-bookOpen i-22"></view>长期课 · 全城选课</view>
+    <view class="ch-title"><view class="i-bookOpen-w i-22"></view>长期课 · 全城选课</view>
     <view class="ch-sub">需要报名入学、有固定课时与开班时间的课程。\n不受距离限制，按离您由近到远排列。</view>
   </view>
 
-  <scroll-view scroll-x class="chips" enable-flex>
+  <scroll-view scroll-x class="catbar" enable-flex>
     <view wx:for="{{categories}}" wx:key="key" class="chip {{item.key===courseCat?'on':''}}" bindtap="onCat" data-cat="{{item.key}}">{{item.label}}</view>
   </scroll-view>
 
@@ -21,7 +21,7 @@
       <view class="meta"><view class="i-calendar i-24"></view><text>{{item.weeks}} · {{item.start}}</text></view>
       <view class="meta"><view class="i-mapPin i-24"></view><text><text class="dist">{{item.distance_km}}km</text> · {{item.venue}}</text></view>
       <view class="cfoot">
-        <view class="seats"><view class="i-user i-24"></view>{{item.seats}}</view>
+        <view class="seats {{item.seatLow?'low':''}}"><view class="{{item.seatLow?'i-user-o':'i-user'}} i-24"></view>{{item.seatLow?('仅剩 '+item.seatNum+' 席'):item.seats}}</view>
         <view class="deadline">{{item.deadline}}</view>
       </view>
       <view class="fee {{item.free?'free':'paid'}}">{{item.fee}}</view>

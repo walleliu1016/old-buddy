@@ -1,7 +1,8 @@
-.page { padding-bottom: 32rpx; }
+.page { padding-bottom: var(--sp-4); }
+
 .dhero {
-  margin: 0; padding: 48rpx 32rpx 36rpx;
-  background: linear-gradient(135deg, var(--primary), var(--primary-d));
+  margin: 0; padding: var(--sp-5) var(--sp-4) var(--sp-4);
+  background: var(--grad-hero);
   color: #fff; position: relative; overflow: hidden;
 }
 .dfav {
@@ -9,29 +10,28 @@
   width: 76rpx; height: 76rpx; border-radius: 20rpx;
   background: rgba(255,255,255,.18); color: #fff;
   display: flex; align-items: center; justify-content: center;
+  transition: transform .15s ease;
 }
+.dfav:active { transform: scale(.88); }
 .dfav.on { color: #FFD9C2; }
-.dtype { display: inline-flex; align-items: center; gap: 10rpx; background: rgba(255,255,255,.18); padding: 10rpx 20rpx; border-radius: var(--r-pill); font-size: 24rpx; font-weight: 700; }
-.dtitle { font-size: 46rpx; font-weight: 800; margin: 24rpx 0 10rpx; line-height: 1.35; padding-right: 80rpx; }
-.ddist { font-size: 26rpx; opacity: .9; }
-.dico { position: absolute; right: 28rpx; bottom: 20rpx; width: 130rpx; height: 130rpx; border-radius: 32rpx; background: rgba(255,255,255,.14); display: flex; align-items: center; justify-content: center; }
+.dtype { display: inline-flex; align-items: center; gap: 10rpx; background: rgba(255,255,255,.18); padding: 10rpx 20rpx; border-radius: var(--r-pill); font-size: var(--fs-cap); font-weight: 700; }
+.dtitle { font-size: var(--fs-hero); font-weight: 800; margin: var(--sp-3) 0 10rpx; line-height: 1.35; padding-right: 80rpx; }
+.ddist { font-size: var(--fs-sub); opacity: .9; }
+.dico { position: absolute; right: 28rpx; bottom: 20rpx; width: 130rpx; height: 130rpx; border-radius: var(--r-box); background: rgba(255,255,255,.14); display: flex; align-items: center; justify-content: center; }
 
-.panel { background: var(--surface); margin: 24rpx; border-radius: var(--r-card); padding: 6rpx 28rpx; box-shadow: 0 2rpx 12rpx rgba(20,45,45,.06); }
-.row { display: flex; align-items: center; gap: 20rpx; padding: 24rpx 0; border-bottom: 1rpx solid var(--line); }
+/* 信息 panel：卡片风格用全局 .card，这里只定布局 */
+.panel { margin: var(--sp-3); padding: 6rpx 28rpx; }
+.row { display: flex; align-items: center; gap: 20rpx; padding: var(--sp-3) 0; border-bottom: 1rpx solid var(--line); }
 .row:last-child { border-bottom: none; }
-.ric { width: 64rpx; height: 64rpx; border-radius: 18rpx; background: var(--primary-soft); color: var(--primary); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.ric { width: 64rpx; height: 64rpx; border-radius: var(--r-card); background: var(--primary-soft); color: var(--primary); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
 .rc { flex: 1; }
-.rk { font-size: 24rpx; color: var(--ink-3); }
-.rv { font-size: 32rpx; font-weight: 600; color: var(--ink); }
+.rk { font-size: var(--fs-cap); color: var(--ink-3); }
+.rv { font-size: var(--fs-body); font-weight: 600; color: var(--ink); }
 
-.desc { background: var(--surface); margin: 0 24rpx 24rpx; border-radius: var(--r-card); padding: 28rpx; box-shadow: 0 2rpx 12rpx rgba(20,45,45,.06); }
-.dh3 { margin: 0 0 12rpx; font-size: 36rpx; color: var(--ink); font-weight: 800; }
-.dp { font-size: 30rpx; color: var(--ink-2); line-height: 1.7; }
+/* 介绍卡：.card 风格，这里只定外边距与排版 */
+.desc { margin: 0 var(--sp-3) var(--sp-3); }
+.dh3 { margin: 0 0 var(--sp-2); font-size: var(--fs-title); color: var(--ink); font-weight: 800; }
+.dp { font-size: var(--fs-body); color: var(--ink-2); line-height: 1.7; }
 
-.anti { margin: 0 24rpx 24rpx; background: var(--accent-soft); border-radius: var(--r-card); padding: 24rpx 28rpx; display: flex; gap: 16rpx; align-items: flex-start; }
-.anti .at { font-size: 26rpx; color: var(--accent-d); line-height: 1.6; }
-.anti .b { font-weight: 800; }
-
-.actions { display: flex; gap: 20rpx; padding: 6rpx 24rpx; }
+.actions { display: flex; gap: 20rpx; padding: 6rpx var(--sp-3); padding-bottom: calc(env(safe-area-inset-bottom) + 24rpx); }
 .actions .btn { margin: 0; padding: 0; line-height: normal; }
-.actions .btn::after { border: none; }

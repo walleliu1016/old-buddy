@@ -1,33 +1,81 @@
 
 page {
+  /* 色彩 */
   --bg:#F4EFE4; --surface:#FFFFFF; --surface-2:#FBF7EF;
   --primary:#C8472E; --primary-d:#9E3320; --primary-soft:#F6E3DC;
   --accent:#E8743B; --accent-d:#CF5E27; --accent-soft:#FBE7DA;
-  --ink:#1F2A2B; --ink-2:#5B6B6C; --ink-3:#8A9798; --line:#E7DFCF;
+  --ink:#1F2A2B; --ink-2:#5B6B6C; --ink-3:#8A9798; --ink-dis:#B9C2C2;
+  --line:#E7DFCF;
   --free:#2E7D5B; --free-soft:#E2F1E9;
-  --r-card:20rpx; --r-btn:28rpx; --r-pill:999rpx; --r-box:32rpx;
+  --danger:#C0392B; --danger-soft:#F7E4E1;
+  --gold:#C99A3C; --gold-soft:#F7EEDC;
+  /* 渐变 */
+  --grad-hero:linear-gradient(135deg,var(--primary) 0%,var(--accent-d) 100%);
+  --grad-btn:linear-gradient(135deg,var(--accent) 0%,var(--accent-d) 100%);
+  /* 字阶 */
+  --fs-hero:46rpx; --fs-title:36rpx; --fs-body:32rpx; --fs-sub:28rpx; --fs-cap:24rpx;
+  /* 间距 */
+  --sp-1:8rpx; --sp-2:16rpx; --sp-3:24rpx; --sp-4:32rpx; --sp-5:48rpx;
+  /* 圆角 / 阴影 */
+  --r-card:24rpx; --r-btn:999rpx; --r-pill:999rpx; --r-box:32rpx;
   --sh:0 8rpx 24rpx rgba(20,45,45,.10);
+  --sh-sm:0 2rpx 10rpx rgba(20,45,45,.06);
   background:var(--bg); color:var(--ink);
   font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
-  font-size:32rpx; line-height:1.5;
+  font-size:var(--fs-body); line-height:1.55;
 }
 view,text,button{box-sizing:border-box;}
-.big { --fs-body:38rpx; }
+
+/* 大字模式：只改字阶变量，各组件字号随之放大 */
+.big { --fs-hero:54rpx; --fs-title:42rpx; --fs-body:38rpx; --fs-sub:34rpx; --fs-cap:28rpx; }
 
 /* 图标基类 */
 [class^="i-"]{display:inline-block;width:40rpx;height:40rpx;background-repeat:no-repeat;background-position:center;background-size:contain;}
 .i-20{width:20rpx;height:20rpx;} .i-22{width:22rpx;height:22rpx;} .i-24{width:24rpx;height:24rpx;}
 .i-26{width:26rpx;height:26rpx;} .i-30{width:30rpx;height:30rpx;} .i-38{width:38rpx;height:38rpx;}
 
-/* 标签 / 按钮 / 卡片 等共享 */
-.tag{display:inline-flex;align-items:center;gap:6rpx;font-size:24rpx;font-weight:700;padding:8rpx 18rpx;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary);}
-.fee{display:inline-block;margin-top:8rpx;font-size:24rpx;font-weight:700;padding:6rpx 18rpx;border-radius:var(--r-pill);}
-.fee.free{background:var(--free-soft);color:var(--free);} .fee.paid{background:var(--accent-soft);color:var(--accent-d);}
-.btn{flex:1;height:96rpx;border-radius:var(--r-btn);border:none;font-size:34rpx;font-weight:700;display:flex;align-items:center;justify-content:center;gap:12rpx;}
-.btn.ghost{background:var(--surface);color:var(--primary);border:3rpx solid var(--primary);}
-.btn.solid{background:var(--accent);color:#fff;}
+/* ============ 全局共享组件类 ============ */
 
-/* ---- 图标（2026-09-03 重做：data-URI 改为本地 PNG，解决企业微信不显示） ---- */
+/* 卡片 */
+.card{background:var(--surface);border-radius:var(--r-card);padding:28rpx;box-shadow:var(--sh);}
+.card:active{opacity:.96;}
+
+/* 区块标题（统一 bar 尺寸） */
+.sec-title{display:flex;align-items:center;gap:12rpx;margin:var(--sp-4) var(--sp-4) 14rpx;font-size:var(--fs-title);font-weight:800;color:var(--ink);}
+.sec-title .bar{width:10rpx;height:34rpx;border-radius:6rpx;background:var(--accent);}
+.hint{margin:0 var(--sp-4) 14rpx;font-size:var(--fs-cap);color:var(--ink-3);line-height:1.6;}
+
+/* 空态 */
+.empty{text-align:center;color:var(--ink-3);padding:80rpx 40rpx;font-size:var(--fs-sub);line-height:1.7;}
+.empty .eico{margin:0 auto 20rpx;width:110rpx;height:110rpx;border-radius:30rpx;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;color:var(--primary);}
+
+/* 防骗提醒条 */
+.anti{display:flex;gap:16rpx;align-items:flex-start;margin:0 var(--sp-3) var(--sp-3);background:var(--accent-soft);border-radius:var(--r-card);padding:24rpx 28rpx;}
+.anti .at{font-size:var(--fs-cap);color:var(--accent-d);line-height:1.6;}
+.anti .b{font-weight:800;}
+
+/* chip（统一语义：选中=主色实底白字） */
+.chips{display:flex;flex-wrap:wrap;gap:16rpx;}
+.chip{display:inline-flex;align-items:center;justify-content:center;padding:16rpx 32rpx;border-radius:var(--r-pill);border:2rpx solid var(--line);background:var(--surface);color:var(--ink-2);font-size:var(--fs-sub);font-weight:700;}
+.chip.on{background:var(--primary);color:#fff;border-color:var(--primary);}
+.chip:active{opacity:.85;}
+
+/* 骨架屏 */
+.skl{position:relative;overflow:hidden;background:var(--surface-2);border-radius:12rpx;}
+.skl::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);animation:skl-shine 1.2s infinite;}
+@keyframes skl-shine{from{transform:translateX(-100%);}to{transform:translateX(100%);}}
+
+/* 标签 / 费用 / 按钮 */
+.tag{display:inline-flex;align-items:center;gap:6rpx;font-size:var(--fs-cap);font-weight:700;padding:8rpx 18rpx;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary);}
+.fee{display:inline-block;margin-top:8rpx;font-size:var(--fs-cap);font-weight:700;padding:6rpx 18rpx;border-radius:var(--r-pill);}
+.fee.free{background:var(--free-soft);color:var(--free);} .fee.paid{background:var(--accent-soft);color:var(--accent-d);}
+.btn{flex:1;height:96rpx;border-radius:var(--r-btn);border:none;font-size:var(--fs-body);font-weight:700;display:flex;align-items:center;justify-content:center;gap:12rpx;}
+.btn.ghost{background:var(--surface);color:var(--primary);border:3rpx solid var(--primary);}
+.btn.solid{background:var(--grad-btn);color:#fff;box-shadow:0 8rpx 20rpx rgba(207,94,39,.30);}
+.btn:active{opacity:.92;transform:scale(.98);}
+.btn::after{border:none;}
+
+/* ---- 图标（本地 PNG，禁 data-URI，见 ICON_AUDIT.md） ---- */
 .i-compass{background-image:url("/assets/icons/compass.png");}
 .i-compass-w{background-image:url("/assets/icons/compass_w.png");}
 .i-compass-o{background-image:url("/assets/icons/compass_o.png");}
@@ -103,17 +151,3 @@ view,text,button{box-sizing:border-box;}
 .i-sliders{background-image:url("/assets/icons/sliders.png");}
 .i-sliders-w{background-image:url("/assets/icons/sliders_w.png");}
 .i-sliders-o{background-image:url("/assets/icons/sliders_o.png");}
-
-/* 大字模式：放大关键正文 */
-.big .ac-title{font-size:42rpx;}
-.big .meta{font-size:34rpx;}
-.big .tag{font-size:28rpx;}
-.big .cl{font-size:32rpx;}
-.big .dtitle{font-size:50rpx;}
-.big .rv{font-size:36rpx;}
-.big .it{font-size:36rpx;}
-.big .rk{font-size:28rpx;}
-.big .greet{font-size:60rpx;}
-.big .b{font-size:54rpx;}
-.big .chip{font-size:34rpx;}
-.big .pn{font-size:48rpx;}

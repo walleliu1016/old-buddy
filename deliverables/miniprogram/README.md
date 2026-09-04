@@ -7,16 +7,27 @@
 ## 工程结构
 ```
 miniprogram/
-├── app.js / app.json / app.wxss      # 全局状态 + 设计令牌 + 图标 + 共享组件
+├── app.js / app.json / app.wxss      # 全局状态 + 设计令牌（CSS 变量）+ 图标类 + 共享样式
+├── config.js                          # 云开发环境 / 本地数据服务地址，一处配置全端生效
 ├── project.config.json / sitemap.json
+├── services/
+│   ├── activity.js / cloud.js   # 活动数据访问层（云开发优先，未开通自动降级本地服务）
+│   └── location.js / storage.js / tts.js  # 定位 / 本地持久化 / 语音播报
 ├── utils/
 │   ├── api.js     # 封装 /nearby、/refresh（BASE 可改）
 │   ├── store.js   # 本地收藏 + 设置持久化
+├── components/
+│   └── activity-card/  # 活动卡片组件（各活动列表复用）
+├── assets/
+│   ├── icons/   # 本地 PNG 图标
+│   └── tabbar/  # tabBar 本地 PNG 图标
 └── pages/
-    ├── home/      # 首页：Hero 发现面板 + 分类九宫格 + 附近活动流
+    ├── home/      # 「附近」tab：Hero 发现面板 + 分类九宫格 + 附近活动流
+    ├── courses/   # 「课程」tab：长期课列表
+    ├── me/        # 「我的」tab：收藏列表、大字模式、语音播报、定位、防骗须知
     ├── detail/    # 活动详情：时间地点/一键导航/我要报名(防骗)/收藏/分享
-    ├── category/  # 分类浏览（按类型筛选，仍受半径约束）
-    └── me/        # 我的：收藏列表、大字模式、语音播报、定位、防骗须知
+    ├── bookings/  # 我的报名
+    └── publish/   # 发布活动
 ```
 
 ## 本地运行（演示）
@@ -37,12 +48,12 @@ miniprogram/
   （上海公共开放数据 app key + 高德地理编码 key，详见 PRD「假设5」）。
 
 ## 设计要点
-- 配色：深青 `#0F766E` + 暖橙 `#EA580C`（适老高对比、可信赖）。
-- 图标：Lucide 线性 SVG 内联为背景图，**零 emoji、零外部依赖**。
+- 配色：砖红主色 `#C8472E` + 暖橙 `#E8743B`，米色底 `#F4EFE4`（适老高对比、暖色可信赖）；
+  设计令牌集中在 `app.wxss` 顶部的 CSS 变量（`--primary` / `--accent` / `--bg` 等）。
+- 图标：本地 PNG 图标（`assets/icons/`，tabBar 用 `assets/tabbar/`），**零 emoji、零外部依赖**。
 - 适老化：基础字号 30rpx（可在「我的」放大至 34rpx）、大点击区、
   焦点可达、`prefers-reduced-motion` 风格；报名带**防诈骗确认闭环**。
 
 ## 已知限制（演示态）
 - 语音播报为设置开关；真实朗读需接入微信同声传译/语音合成插件，本演示未接。
 - 报名为「复制官方链接」而非内嵌 web-view（需配置业务域名后方可内嵌）。
-- tabBar 为纯文字（微信要求 tabBar 图标必须是本地 PNG，演示未生成位图）。

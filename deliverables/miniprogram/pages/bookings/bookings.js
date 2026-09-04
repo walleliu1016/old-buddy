@@ -20,6 +20,9 @@ Page({
     app.globalData.bkTab = t;
     this.apply(t);
   },
+  goHome() {
+    wx.switchTab({ url: "/pages/home/home" });
+  },
   onCardTap(e) {
     wx.navigateTo({ url: "/pages/detail/detail?id=" + e.currentTarget.dataset.id });
   },

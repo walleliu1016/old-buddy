@@ -1,47 +1,40 @@
 .page { padding-bottom: 32rpx; }
 
-.sec-title { display: flex; align-items: center; gap: 12rpx; margin: 28rpx 32rpx 0; font-size: 38rpx; font-weight: 800; color: var(--ink); }
-.sec-title .bar { width: 10rpx; height: 36rpx; border-radius: 6rpx; background: var(--primary); }
-.hint { margin: 8rpx 32rpx 16rpx; font-size: 26rpx; color: var(--ink-3); }
-
-.bk-seg { display: flex; gap: 20rpx; padding: 0 32rpx; }
+/* 分段控件：胶囊轨道式 */
+.bk-seg { display: flex; gap: 6rpx; margin: 0 32rpx; padding: 6rpx; background: var(--surface-2); border-radius: var(--r-pill); }
 .rseg {
-  flex: 1; text-align: center; padding: 22rpx 0; border-radius: 16rpx;
-  background: var(--surface); color: var(--ink); border: 2rpx solid var(--line);
-  font-size: 30rpx; font-weight: 700;
+  flex: 1; text-align: center; padding: 20rpx 0; border-radius: var(--r-pill);
+  color: var(--ink-2); font-size: var(--fs-sub); font-weight: 700;
 }
-.rseg.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+.rseg.on { background: var(--surface); color: var(--primary); box-shadow: var(--sh-sm); }
 
 .feed { padding: 16rpx 24rpx; }
 
-.card {
-  background: var(--surface); border-radius: var(--r-card); padding: 28rpx;
-  margin-bottom: 22rpx; box-shadow: 0 4rpx 18rpx rgba(20,45,45,.07);
-}
+.card.bk { margin-bottom: 22rpx; }
 .card.bk.canceled .ttl { color: var(--ink-3); }
 .b-top { display: flex; align-items: center; gap: 16rpx; }
-.bstat { font-size: 24rpx; font-weight: 700; padding: 8rpx 20rpx; border-radius: var(--r-pill); }
-.bstat.pending { background: var(--accent-soft); color: var(--accent-d); }
+.bstat { font-size: var(--fs-cap); font-weight: 700; padding: 8rpx 20rpx; border-radius: var(--r-pill); }
+.bstat.pending { background: var(--primary-soft); color: var(--primary); }
 .bstat.done { background: var(--surface-2); color: var(--ink-3); }
-.bstat.canceled { background: #F3E4E1; color: var(--danger); }
-.bkind { font-size: 26rpx; color: var(--ink-3); }
-.card .ttl { font-size: 36rpx; font-weight: 800; color: var(--ink); margin: 16rpx 0 14rpx; line-height: 1.4; }
-.card .meta { display: flex; align-items: center; gap: 12rpx; font-size: 28rpx; color: var(--ink-2); margin-top: 10rpx; }
+.bstat.canceled { background: var(--danger-soft); color: var(--danger); }
+.bkind { font-size: var(--fs-cap); color: var(--ink-3); }
+.card .ttl { font-size: var(--fs-title); font-weight: 800; color: var(--ink); margin: 16rpx 0 14rpx; line-height: 1.4; }
+.card .meta { display: flex; align-items: center; gap: 12rpx; font-size: var(--fs-sub); color: var(--ink-2); margin-top: 10rpx; }
 .bkfoot { display: flex; align-items: center; justify-content: space-between; gap: 12rpx; margin-top: 16rpx; padding-top: 16rpx; border-top: 1rpx dashed var(--line); }
-.btime { font-size: 26rpx; color: var(--ink-3); }
+.btime { font-size: var(--fs-cap); color: var(--ink-3); }
+/* 取消报名：幽灵小按钮 */
 .bbtn {
-  flex: 0 0 auto; padding: 14rpx 28rpx; border-radius: 12rpx;
+  flex: 0 0 auto; padding: 12rpx 30rpx; border-radius: var(--r-pill);
   background: var(--surface); color: var(--ink-2); border: 2rpx solid var(--line);
-  font-size: 26rpx; font-weight: 700;
+  font-size: var(--fs-cap); font-weight: 700;
 }
+.bbtn:active { opacity: .8; }
 
-.empty { text-align: center; padding: 80rpx 20rpx; color: var(--ink-3); font-size: 28rpx; }
-.empty .eico { margin-bottom: 16rpx; }
-
-.anti { display: flex; gap: 14rpx; align-items: flex-start; margin: 16rpx 24rpx; background: var(--accent-soft); border-radius: var(--r-card); padding: 24rpx 28rpx; }
-.anti .at { font-size: 26rpx; color: var(--accent-d); line-height: 1.6; }
-.anti .b { font-weight: 800; }
-
-.big .ttl { font-size: 42rpx; }
-.big .meta { font-size: 32rpx; }
-.big .rseg { font-size: 32rpx; }
+/* 空态引导按钮 */
+.ebtn {
+  display: inline-flex; align-items: center; justify-content: center; margin: 28rpx auto 0;
+  padding: 16rpx 44rpx; border-radius: var(--r-pill);
+  background: var(--surface); color: var(--primary); border: 2rpx solid var(--primary);
+  font-size: var(--fs-sub); font-weight: 700;
+}
+.ebtn:active { opacity: .85; }

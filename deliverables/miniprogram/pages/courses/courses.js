@@ -45,10 +45,16 @@ Page({
 
   applyFilter(courses) {
     const cat = this.data.courseCat;
-    const list = courses.map((c) => Object.assign({}, c, {
-      free: /免费|0\s*元|免收/.test(c.fee || ""),
-      booked: app.isBooked(c.id)
-    }));
+    const list = courses.map((c) => {
+      const m = /(\d+)/.exec(c.seats || "");
+      const seatNum = m ? parseInt(m[1], 10) : null;
+      return Object.assign({}, c, {
+        free: /免费|0\s*元|免收/.test(c.fee || ""),
+        booked: app.isBooked(c.id),
+        seatNum: seatNum,
+        seatLow: seatNum != null && seatNum <= 5
+      });
+    });
     const filtered = cat === "all" ? list : list.filter((c) => c.type === cat);
     this.setData({ list: filtered, catLabel: catLabelOf(cat) });
   },

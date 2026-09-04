@@ -1,4 +1,5 @@
 {
   "navigationBarTitleText": "长期课 · 全城选课",
+  "enablePullDownRefresh": true,
   "usingComponents": {}
 }

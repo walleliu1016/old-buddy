@@ -88,7 +88,7 @@
       还没有发布过活动，去「发布」里发一个吧。
     </view>
     <view class="plist">
-      <view class="pcard" wx:for="{{mine}}" wx:key="id">
+      <view class="card pcard" wx:for="{{mine}}" wx:key="id">
         <view class="p-head">
           <text class="p-title">{{item.title}}</text>
           <text class="p-status {{item.status==='已发布'?'ok':''}}">{{item.status}}</text>
