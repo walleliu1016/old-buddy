@@ -29,8 +29,11 @@ view,text,button{box-sizing:border-box;}
 /* 大字模式：只改字阶变量，各组件字号随之放大 */
 .big { --fs-hero:54rpx; --fs-title:42rpx; --fs-body:38rpx; --fs-sub:34rpx; --fs-cap:28rpx; }
 
-/* 图标基类 */
-[class^="i-"]{display:inline-block;width:40rpx;height:40rpx;background-repeat:no-repeat;background-position:center;background-size:contain;}
+/* 图标基类（真机 WXSS 不支持 [class^="i-"] 属性选择器，
+   基础属性已合并进各尺寸类，图标渲染不依赖下面这行） */
+[class^="i-"], .i-20, .i-22, .i-24, .i-26, .i-30, .i-38 {
+  display:inline-block;background-repeat:no-repeat;background-position:center;background-size:contain;
+}
 .i-20{width:20rpx;height:20rpx;} .i-22{width:22rpx;height:22rpx;} .i-24{width:24rpx;height:24rpx;}
 .i-26{width:26rpx;height:26rpx;} .i-30{width:30rpx;height:30rpx;} .i-38{width:38rpx;height:38rpx;}
 

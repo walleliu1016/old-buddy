@@ -1,21 +1,43 @@
 const app = getApp();
 const storage = require("../../services/storage.js");
 const locationSrv = require("../../services/location.js");
+const cloud = require("../../services/cloud.js");
 
 Page({
-  data: { settings: { bigFont: false, voice: false }, favCount: 0, favs: [], locationName: "人民广场", bigFont: false, pendingCount: 0 },
+  data: { settings: { bigFont: false, voice: false }, favCount: 0, favs: [], locationName: "人民广场", bigFont: false, pendingCount: 0, nickName: "", avatarUrl: "" },
 
   onShow() {
     const set = app.globalData.settings;
     const favs = storage.getFavorites();
+    const me = storage.getProfile();
     this.setData({
       settings: { bigFont: set.bigFont, voice: set.voice },
       favs: favs,
       favCount: favs.length,
       locationName: app.globalData.location.name,
       bigFont: set.bigFont,
-      pendingCount: app.pendingCount()
+      pendingCount: app.pendingCount(),
+      nickName: me.nickName || "",
+      avatarUrl: me.avatarUrl || ""
     });
+  },
+
+  /* 头像：微信新隐私方案 chooseAvatar（未开云时存本地缓存，开通后同步云端） */
+  onChooseAvatar(e) {
+    const avatarUrl = e.detail.avatarUrl || "";
+    this.setData({ avatarUrl });
+    storage.saveProfile(Object.assign(storage.getProfile(), { avatarUrl }));
+    if (cloud.isReady()) { cloud.updateMe({ avatarUrl }).catch(() => {}); }
+  },
+
+  /* 昵称：type=nickname 键盘自带「使用微信昵称」快捷填入 */
+  onNickBlur(e) {
+    const nickName = (e.detail.value || "").trim();
+    if (nickName === (storage.getProfile().nickName || "")) return;
+    this.setData({ nickName });
+    storage.saveProfile(Object.assign(storage.getProfile(), { nickName }));
+    if (cloud.isReady()) { cloud.updateMe({ nickName }).catch(() => {}); }
+    if (nickName) wx.showToast({ title: "昵称已保存", icon: "none" });
   },
 
   onBookings() { wx.navigateTo({ url: "/pages/bookings/bookings" }); },

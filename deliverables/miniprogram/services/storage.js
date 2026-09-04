@@ -1,9 +1,10 @@
-// services/storage.js — 本地持久化（收藏 / 设置 / 定位 / 半径 / 报名）
+// services/storage.js — 本地持久化（收藏 / 设置 / 定位 / 半径 / 报名 / 个人资料）
 const K_FAV = "ob_fav";
 const K_SET = "ob_set";
 const K_LOC = "ob_loc";
 const K_RAD = "ob_rad";
 const K_BK = "ob_bk";
+const K_ME = "ob_me";
 
 function get(k, def) {
   try { const v = wx.getStorageSync(k); return v ? v : def; } catch (e) { return def; }
@@ -31,5 +32,9 @@ module.exports = {
 
   /* ---- 报名（订单） ---- */
   getBookings: () => get(K_BK, []),
-  saveBookings: (list) => set(K_BK, list)
+  saveBookings: (list) => set(K_BK, list),
+
+  /* ---- 个人资料（头像/昵称，新隐私方案本地缓存） ---- */
+  getProfile: () => get(K_ME, { nickName: "", avatarUrl: "" }),
+  saveProfile: (p) => set(K_ME, p)
 };

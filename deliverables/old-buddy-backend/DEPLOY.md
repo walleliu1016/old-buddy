@@ -118,10 +118,24 @@ curl "http://localhost:8800/api/v1/activities?limit=20"
 
 | 函数 | 变量 | 值 |
 |---|---|---|
-| sync | `FACTORY_BASE` | 数据工厂公网地址（https） |
-| sync | `ADMIN_KEY` | 与工厂 `ADMIN_KEY` 一致 |
+| sync | `FACTORY_SERVICE` | 数据工厂的**云托管服务名**（推荐，内网调用） |
+| sync | `FACTORY_BASE` | 数据工厂公网地址（自建服务器时用，二选一） |
+| sync | `ADMIN_KEY` | 与工厂 `ADMIN_KEY` 一致（仅 FACTORY_BASE 模式需要） |
 | pay | `SUB_MCH_ID` | 微信支付子商户号（收费活动才需） |
 | activities/booking 等 | （无需特殊变量） | — |
+
+### 4.4.1 方案 B：数据工厂直接托管到微信云托管（推荐，免服务器）
+
+**可以不用自己的服务器**——数据工厂（FastAPI）打包成容器，托管在微信「云托管」（CloudBase Run）：
+
+1. 云开发控制台 →「云托管」→ 开通（按量付费，有免费额度）→ 新建服务，如 `oldbuddy-factory`
+2. 上传 `old-buddy-backend/backend-pipeline/`（目录里已备好 `Dockerfile`），或在服务设置里绑定本 GitHub 仓库自动构建
+3. 在「服务设置 → 环境变量」注入 `SH_DATA_APP_KEY` / `AMAP_KEY` / `LLM_API_KEY`
+4. 云函数 `sync` 配置环境变量 `FACTORY_SERVICE = oldbuddy-factory`
+5. 完成。sync 会通过**微信内网**（`cloud.callContainer`）拉取数据：
+   - ✅ 无需公网 IP / HTTPS 证书 / 域名备案
+   - ✅ 密钥不出腾讯云，爬虫出口 IP 是云托管的固定出口
+   - ✅ 云托管可设「缩容到 0」，没流量不扣费（sync 冷启动会多等几秒）
 
 ### 4.5 配置定时触发器（每日同步）
 

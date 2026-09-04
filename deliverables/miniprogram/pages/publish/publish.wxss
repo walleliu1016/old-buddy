@@ -50,8 +50,36 @@
   background: var(--surface-2); color: var(--ink-3); }
 .p-status.ok { background: var(--free-soft); color: var(--free); }
 .p-meta { font-size: var(--fs-sub); color: var(--ink-2); margin-top: 12rpx; line-height: 1.5; }
-.p-acts { display: flex; justify-content: flex-end; margin-top: 16rpx; }
+.p-acts { display: flex; justify-content: flex-end; gap: 16rpx; margin-top: 16rpx; }
 .pbtn { font-size: var(--fs-sub); font-weight: 700; padding: 14rpx 34rpx;
   border-radius: var(--r-pill); }
-.pbtn.off { background: var(--primary-soft); color: var(--primary); }
+.pbtn.view { background: var(--primary-soft); color: var(--primary); }
+.pbtn.off { background: var(--surface-2); color: var(--ink-2); }
 .pbtn:active { opacity: .85; }
+
+/* 报名名单弹层 */
+.sheet-overlay { position: fixed; left: 0; right: 0; top: 0; bottom: 0;
+  background: rgba(20,30,30,.45); z-index: 100;
+  display: flex; align-items: flex-end; }
+.sheet { width: 100%; background: var(--bg); border-radius: 32rpx 32rpx 0 0;
+  padding: 16rpx 28rpx calc(env(safe-area-inset-bottom) + 28rpx);
+  max-height: 70vh; display: flex; flex-direction: column; }
+.sheet-handle { width: 72rpx; height: 8rpx; border-radius: 4rpx;
+  background: var(--line); margin: 0 auto 16rpx; }
+.sheet-title { text-align: center; font-size: 34rpx; font-weight: 800; color: var(--ink); }
+.e-sub { text-align: center; font-size: 26rpx; color: var(--ink-2); margin-top: 8rpx; }
+.e-tip { text-align: center; color: var(--ink-2); font-size: 28rpx; padding: 60rpx 0; }
+.e-scroll { max-height: 50vh; margin-top: 20rpx; }
+.e-item { display: flex; align-items: center; gap: 20rpx;
+  background: var(--surface); border-radius: var(--r-card);
+  padding: 22rpx 26rpx; margin-bottom: 16rpx; }
+.e-ava { width: 76rpx; height: 76rpx; border-radius: 50%; flex: 0 0 auto;
+  background: var(--primary-soft);
+  display: flex; align-items: center; justify-content: center; }
+.e-ava-ph { color: var(--primary); font-size: 30rpx; font-weight: 800; }
+.e-mid { flex: 1; min-width: 0; }
+.e-name { font-size: 30rpx; font-weight: 700; color: var(--ink); }
+.e-meta { font-size: 24rpx; color: var(--ink-3); margin-top: 4rpx; }
+.e-call { flex: 0 0 auto; font-size: 26rpx; font-weight: 700;
+  color: #fff; background: var(--accent); border-radius: var(--r-pill);
+  padding: 12rpx 26rpx; }

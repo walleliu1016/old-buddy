@@ -25,5 +25,11 @@
     ]
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于查找您附近的活动、课程和公益服务"
+    }
+  },
+  "requiredPrivateInfos": ["getLocation"]
 }

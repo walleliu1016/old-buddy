@@ -6,8 +6,13 @@
 const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
+const cmd = db.command;
 
 const CATEGORIES = ['文艺', '学习', '运动', '公益', '市集'];
+const BK_STATUS = {
+  pending: '待参加', unpaid: '待支付', paid: '已支付',
+  attended: '已参加', cancelled: '已取消', refunding: '退款中'
+};
 
 exports.main = async (event) => {
   const { OPENID } = cloud.getWXContext();
@@ -17,6 +22,7 @@ exports.main = async (event) => {
     if (event.action === 'create') return await create(event, openid);
     if (event.action === 'mine') return await mine(openid);
     if (event.action === 'offline') return await offline(event, openid);
+    if (event.action === 'enrollments') return await enrollments(event, openid);
     return { code: 422, msg: 'unknown action' };
   } catch (e) {
     return { code: 500, msg: e.message || String(e) };
@@ -107,4 +113,42 @@ async function offline(e, openid) {
   }).update({ data: { status: 'offline', updatedAt: new Date() } });
   if (!q.stats || q.stats.updated === 0) return { code: 404, msg: '记录不存在或无权操作' };
   return { code: 0, data: { status: 'offline' } };
+}
+
+/* ---------- 报名者名单（仅发布者本人可看） ---------- */
+async function enrollments(e, openid) {
+  // 1) 校验活动确为此人发布
+  const act = await db.collection('activities').where({
+    _id: e.id, source: 'user', publisherOpenid: openid
+  }).get();
+  if (!act.data.length) return { code: 404, msg: '活动不存在或无权查看' };
+
+  // 2) 拉全部报名单（含已取消，便于组织者掌握变动）
+  const bks = await db.collection('bookings').where({ activityId: e.id })
+    .orderBy('bookedAt', 'desc').limit(100).get();
+
+  // 3) 联查报名者昵称/头像/电话
+  const uids = Array.from(new Set(bks.data.map(b => b.userId)));
+  const userMap = {};
+  if (uids.length) {
+    const us = await db.collection('users').where({ openid: cmd.in(uids) }).get().catch(() => ({ data: [] }));
+    (us.data || []).forEach(u => {
+      userMap[u.openid] = {
+        nickName: u.nickName || '',
+        avatarUrl: u.avatarUrl || '',
+        phone: u.phone || ''
+      };
+    });
+  }
+
+  const list = bks.data.map(b => ({
+    orderNo: b.orderNo || '',
+    status: BK_STATUS[b.status] || b.status,
+    nickName: (userMap[b.userId] || {}).nickName || '老朋友',
+    avatarUrl: (userMap[b.userId] || {}).avatarUrl || '',
+    contact: (userMap[b.userId] || {}).phone || '',
+    bookedAt: b.bookedAt || null
+  }));
+  const validCount = bks.data.filter(b => b.status !== 'cancelled').length;
+  return { code: 0, data: { title: act.data[0].title, count: list.length, validCount, list } };
 }

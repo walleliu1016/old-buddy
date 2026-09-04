@@ -1,19 +1,32 @@
 // 云函数 sync —— 从「自有数据工厂」拉取聚合结果，幂等 upsert 进云数据库
 // 触发方式：① 定时触发器（见 config.json）② 被 activities 云函数空库自愈调用 ③ 手动 callFunction
 //
-// 环境变量（云函数配置 / 或改下面 FACTORY_BASE）：
-//   FACTORY_BASE  数据工厂公网地址，如 https://factory.example.com
-//   ADMIN_KEY     数据工厂 admin key
+// 环境变量（数据工厂接入方式二选一）：
+//   FACTORY_SERVICE  数据工厂的「微信云托管」服务名（推荐：内网 callContainer，免公网/免备案/免鉴权 IP）
+//   FACTORY_BASE     数据工厂公网地址，如 https://factory.example.com（自建服务器时用）
+//   ADMIN_KEY        数据工厂 admin key（仅 FACTORY_BASE 模式需要）
 //
-// 未配置 FACTORY_BASE 时自动使用内置种子数据落库，保证首次部署即可跑通。
+// 两者都未配置时自动使用内置种子数据落库，保证首次部署即可跑通。
 const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 const cmd = db.command;
 const https = require('https');
 
+const FACTORY_SERVICE = process.env.FACTORY_SERVICE || '';
 const FACTORY_BASE = process.env.FACTORY_BASE || '';
 const ADMIN_KEY = process.env.ADMIN_KEY || '';
+
+// 统一取数：优先云托管内网 callContainer，其次公网 HTTPS
+async function fetchFactory(path) {
+  if (FACTORY_SERVICE) {
+    const res = await cloud.callContainer({ path: path, method: 'GET' });
+    if (res && res.statusCode === 200) return JSON.stringify(res.data);
+    throw new Error('callContainer statusCode=' + (res && res.statusCode));
+  }
+  if (FACTORY_BASE) return httpGet(FACTORY_BASE + path);
+  throw new Error('未配置数据工厂（FACTORY_SERVICE / FACTORY_BASE）');
+}
 
 exports.main = async (event) => {
   event = event || {};
@@ -22,17 +35,16 @@ exports.main = async (event) => {
 
   let records = [], source = 'seed';
   // 1) 优先拉数据工厂
-  if (FACTORY_BASE) {
-    try {
-      const r = await httpGet(`${FACTORY_BASE}/api/v1/activities?limit=${limit}`);
-      const body = JSON.parse(r);
-      if (body && body.code === 0 && Array.isArray(body.data && body.data.list) && body.data.list.length) {
-        records = body.data.list; source = 'factory';
-      }
-    } catch (e) {
-      // 拉失败：记录但不中断，走种子兜底
-      console.warn('factory pull failed:', e.message);
+  try {
+    const r = await fetchFactory(`/api/v1/activities?limit=${limit}`);
+    const body = JSON.parse(r);
+    if (body && body.code === 0 && Array.isArray(body.data && body.data.list) && body.data.list.length) {
+      records = body.data.list;
+      source = FACTORY_SERVICE ? 'factory-cloudrun' : 'factory';
     }
+  } catch (e) {
+    // 拉失败：记录但不中断，走种子兜底
+    console.warn('factory pull failed:', e.message);
   }
   if (!records.length) records = SEED();
 
@@ -53,15 +65,13 @@ exports.main = async (event) => {
 
   // 3) AI 汇总（拉得到就写 ai_summaries）
   let summary = null;
-  if (FACTORY_BASE) {
-    try {
-      const s = JSON.parse(await httpGet(`${FACTORY_BASE}/api/v1/summary?scope=city&scopeKey=上海&period=week`));
-      if (s && s.code === 0 && s.data && s.data.content) {
-        summary = s.data;
-        await db.collection('ai_summaries').add({ data: Object.assign({}, summary, { generatedAt: new Date() }) });
-      }
-    } catch (e) { /* 汇总失败不影响主流程 */ }
-  }
+  try {
+    const s = JSON.parse(await fetchFactory('/api/v1/summary?scope=city&scopeKey=上海&period=week'));
+    if (s && s.code === 0 && s.data && s.data.content) {
+      summary = s.data;
+      await db.collection('ai_summaries').add({ data: Object.assign({}, summary, { generatedAt: new Date() }) });
+    }
+  } catch (e) { /* 汇总失败不影响主流程 */ }
 
   // 4) 写同步日志
   const durationMs = Date.now() - t0;

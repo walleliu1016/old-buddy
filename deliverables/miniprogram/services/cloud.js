@@ -94,6 +94,7 @@ module.exports = {
   publishCreate(payload) { return call('publish', Object.assign({ action: 'create' }, payload)); },
   publishMine() { return call('publish', { action: 'mine' }).then((d) => (d && d.list) || []); },
   publishOffline(id) { return call('publish', { action: 'offline', id: id }); },
+  publishEnrollments(id) { return call('publish', { action: 'enrollments', id: id }); },
 
   /* ---- 运维 ---- */
   sync() { return call('sync', { action: 'run' }); }

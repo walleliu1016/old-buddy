@@ -4,7 +4,12 @@
   border-radius: var(--r-card); padding: 36rpx; color: #fff; display: flex; align-items: center; gap: 24rpx; box-shadow: var(--sh);
 }
 .avatar { width: 100rpx; height: 100rpx; border-radius: 50%; background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; }
-.pn { font-size: var(--fs-hero); font-weight: 800; }
+.avatar-btn { padding: 0; margin: 0; border: none; background: transparent; line-height: 1; width: 100rpx; height: 100rpx; border-radius: 50%; flex: 0 0 auto; }
+.avatar-btn::after { border: none; }
+.avatar-img { width: 100rpx; height: 100rpx; border-radius: 50%; display: block; }
+.pcol { flex: 1; min-width: 0; }
+.pn-input { font-size: var(--fs-hero); font-weight: 800; color: #fff; height: 1.4em; }
+.pn-ph { color: rgba(255,255,255,.65); font-weight: 600; }
 .ps { font-size: var(--fs-cap); opacity: .85; margin-top: 4rpx; }
 
 .list { background: var(--surface); margin: 0 24rpx 24rpx; border-radius: var(--r-card); overflow: hidden; box-shadow: var(--sh-sm); }

@@ -1,7 +1,14 @@
 <view class="page {{bigFont?'big':''}}">
   <view class="profile">
-    <view class="avatar"><view class="i-user i-38"></view></view>
-    <view><view class="pn">老朋友</view><view class="ps">用心过好每一天</view></view>
+    <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+      <image wx:if="{{avatarUrl}}" class="avatar-img" src="{{avatarUrl}}" mode="aspectFill"/>
+      <view wx:else class="avatar"><view class="i-user i-38"></view></view>
+    </button>
+    <view class="pcol">
+      <input class="pn-input" type="nickname" placeholder="点这里写昵称" placeholder-class="pn-ph"
+             value="{{nickName}}" bindblur="onNickBlur" bindconfirm="onNickBlur" />
+      <view class="ps">用心过好每一天</view>
+    </view>
   </view>
 
   <view class="list">

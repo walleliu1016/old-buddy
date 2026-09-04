@@ -24,7 +24,10 @@ Page({
     contact: "",
     submitting: false,
     /* 我发布的 */
-    mine: [], mineLoaded: false
+    mine: [], mineLoaded: false,
+    /* 报名者名单弹层 */
+    showEnroll: false, enrollLoading: false,
+    enrollTitle: "", enrollCount: 0, enrollList: []
   },
 
   onLoad(options) {
@@ -149,8 +152,51 @@ Page({
       title: x.title, category: x.category || "公益",
       timeText: x.timeText || "", venue: x.venue || "",
       fee: x.price > 0 ? "¥" + (x.price / 100) : "免费",
-      status: x.status === "offline" ? "已下架" : (x.status === "本机暂存" ? "本机暂存" : "已发布")
+      status: x.status === "offline" ? "已下架" : (x.status === "本机暂存" ? "本机暂存" : "已发布"),
+      enrollCount: Number(x.bookingCount) || 0
     }));
+  },
+
+  /* 点击卡片 -> 查看报名者名单（组织活动用） */
+  onCardTap(e) {
+    const id = e.currentTarget.dataset.id;
+    if (String(id).indexOf("local_") === 0) {
+      wx.showToast({ title: "本机暂存的活动暂无报名，开通云开发后可查看", icon: "none", duration: 2000 });
+      return;
+    }
+    this.setData({ showEnroll: true, enrollLoading: true, enrollTitle: "", enrollList: [], enrollCount: 0 });
+    cloud.publishEnrollments(id).then((d) => {
+      this.setData({
+        enrollLoading: false,
+        enrollTitle: d.title || "",
+        enrollCount: d.validCount || 0,
+        enrollList: (d.list || []).map((x) => ({
+          nickName: x.nickName, avatarUrl: x.avatarUrl, status: x.status,
+          contact: x.contact || "",
+          bookedAt: this.fmtTime(x.bookedAt)
+        }))
+      });
+    }).catch((err) => {
+      this.setData({ showEnroll: false, enrollLoading: false });
+      wx.showToast({ title: err.message || "获取报名名单失败", icon: "none" });
+    });
+  },
+
+  closeEnroll() { this.setData({ showEnroll: false }); },
+  noop() {},
+
+  onCallContact(e) {
+    const phone = e.currentTarget.dataset.phone;
+    if (!phone) { wx.showToast({ title: "对方未留电话", icon: "none" }); return; }
+    wx.makePhoneCall({ phoneNumber: phone, fail: () => {} });
+  },
+
+  fmtTime(t) {
+    if (!t) return "";
+    const d = new Date(t);
+    if (isNaN(d.getTime())) return String(t);
+    return (d.getMonth() + 1) + "月" + d.getDate() + "日 " +
+      String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
   },
 
   onOffline(e) {
