@@ -1,5 +1,6 @@
 const app = getApp();
 const storage = require("../../services/storage.js");
+const cloud = require("../../services/cloud.js");
 
 Page({
   data: { activity: null, fav: false, iconName: "music", isCourse: false, booked: false },
@@ -52,6 +53,8 @@ Page({
     const a = this.data.activity;
     if (!a) return;
     const nowFav = storage.toggleFavorite({ id: a.id, title: a.title, type: a.type, venue: a.venue, address: a.address, time: a.time, lat: a.lat, lng: a.lng, fee: a.fee });
+    // 云开发已开通 -> 收藏同步到云端（失败不影响本地体验）
+    if (cloud.isReady()) { cloud.toggleFavorite(a.id).catch(() => {}); }
     this.setData({ fav: nowFav });
   }
 });

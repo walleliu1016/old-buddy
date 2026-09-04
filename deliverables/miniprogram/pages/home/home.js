@@ -2,6 +2,7 @@ const app = getApp();
 const activitySrv = require("../../services/activity.js");
 const storage = require("../../services/storage.js");
 const locationSrv = require("../../services/location.js");
+const cloud = require("../../services/cloud.js");
 
 const CATEGORIES = [
   { key: "all", label: "全部", icon: "grid" },
@@ -107,6 +108,8 @@ Page({
     const item = this.data.feed.find((a) => a.id === id);
     if (!item) return;
     const nowFav = storage.toggleFavorite({ id: item.id, title: item.title, type: item.type, venue: item.venue, address: item.address, time: item.time, lat: item.lat, lng: item.lng, fee: item.fee });
+    // 云开发已开通 -> 收藏同步到云端（失败不影响本地体验）
+    if (cloud.isReady()) { cloud.toggleFavorite(item.id).catch(() => {}); }
     const feed = this.data.feed.map((a) => (a.id === id ? Object.assign({}, a, { fav: nowFav }) : a));
     this.setData({ feed });
   },
