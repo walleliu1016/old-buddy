@@ -1,0 +1,119 @@
+
+page {
+  --bg:#F4EFE4; --surface:#FFFFFF; --surface-2:#FBF7EF;
+  --primary:#C8472E; --primary-d:#9E3320; --primary-soft:#F6E3DC;
+  --accent:#E8743B; --accent-d:#CF5E27; --accent-soft:#FBE7DA;
+  --ink:#1F2A2B; --ink-2:#5B6B6C; --ink-3:#8A9798; --line:#E7DFCF;
+  --free:#2E7D5B; --free-soft:#E2F1E9;
+  --r-card:20rpx; --r-btn:28rpx; --r-pill:999rpx; --r-box:32rpx;
+  --sh:0 8rpx 24rpx rgba(20,45,45,.10);
+  background:var(--bg); color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:32rpx; line-height:1.5;
+}
+view,text,button{box-sizing:border-box;}
+.big { --fs-body:38rpx; }
+
+/* 图标基类 */
+[class^="i-"]{display:inline-block;width:40rpx;height:40rpx;background-repeat:no-repeat;background-position:center;background-size:contain;}
+.i-20{width:20rpx;height:20rpx;} .i-22{width:22rpx;height:22rpx;} .i-24{width:24rpx;height:24rpx;}
+.i-26{width:26rpx;height:26rpx;} .i-30{width:30rpx;height:30rpx;} .i-38{width:38rpx;height:38rpx;}
+
+/* 标签 / 按钮 / 卡片 等共享 */
+.tag{display:inline-flex;align-items:center;gap:6rpx;font-size:24rpx;font-weight:700;padding:8rpx 18rpx;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--primary);}
+.fee{display:inline-block;margin-top:8rpx;font-size:24rpx;font-weight:700;padding:6rpx 18rpx;border-radius:var(--r-pill);}
+.fee.free{background:var(--free-soft);color:var(--free);} .fee.paid{background:var(--accent-soft);color:var(--accent-d);}
+.btn{flex:1;height:96rpx;border-radius:var(--r-btn);border:none;font-size:34rpx;font-weight:700;display:flex;align-items:center;justify-content:center;gap:12rpx;}
+.btn.ghost{background:var(--surface);color:var(--primary);border:3rpx solid var(--primary);}
+.btn.solid{background:var(--accent);color:#fff;}
+
+/* ---- 图标（2026-09-03 重做：data-URI 改为本地 PNG，解决企业微信不显示） ---- */
+.i-compass{background-image:url("/assets/icons/compass.png");}
+.i-compass-w{background-image:url("/assets/icons/compass_w.png");}
+.i-compass-o{background-image:url("/assets/icons/compass_o.png");}
+.i-type{background-image:url("/assets/icons/type.png");}
+.i-type-w{background-image:url("/assets/icons/type_w.png");}
+.i-type-o{background-image:url("/assets/icons/type_o.png");}
+.i-refresh{background-image:url("/assets/icons/refresh.png");}
+.i-refresh-w{background-image:url("/assets/icons/refresh_w.png");}
+.i-refresh-o{background-image:url("/assets/icons/refresh_o.png");}
+.i-mapPin{background-image:url("/assets/icons/mapPin.png");}
+.i-mapPin-w{background-image:url("/assets/icons/mapPin_w.png");}
+.i-mapPin-o{background-image:url("/assets/icons/mapPin_o.png");}
+.i-music{background-image:url("/assets/icons/music.png");}
+.i-music-w{background-image:url("/assets/icons/music_w.png");}
+.i-music-o{background-image:url("/assets/icons/music_o.png");}
+.i-bookOpen{background-image:url("/assets/icons/bookOpen.png");}
+.i-bookOpen-w{background-image:url("/assets/icons/bookOpen_w.png");}
+.i-bookOpen-o{background-image:url("/assets/icons/bookOpen_o.png");}
+.i-activity{background-image:url("/assets/icons/activity.png");}
+.i-activity-w{background-image:url("/assets/icons/activity_w.png");}
+.i-activity-o{background-image:url("/assets/icons/activity_o.png");}
+.i-heartPulse{background-image:url("/assets/icons/heartPulse.png");}
+.i-heartPulse-w{background-image:url("/assets/icons/heartPulse_w.png");}
+.i-heartPulse-o{background-image:url("/assets/icons/heartPulse_o.png");}
+.i-bag{background-image:url("/assets/icons/bag.png");}
+.i-bag-w{background-image:url("/assets/icons/bag_w.png");}
+.i-bag-o{background-image:url("/assets/icons/bag_o.png");}
+.i-clock{background-image:url("/assets/icons/clock.png");}
+.i-clock-w{background-image:url("/assets/icons/clock_w.png");}
+.i-clock-o{background-image:url("/assets/icons/clock_o.png");}
+.i-search{background-image:url("/assets/icons/search.png");}
+.i-search-w{background-image:url("/assets/icons/search_w.png");}
+.i-search-o{background-image:url("/assets/icons/search_o.png");}
+.i-shield{background-image:url("/assets/icons/shield.png");}
+.i-shield-w{background-image:url("/assets/icons/shield_w.png");}
+.i-shield-o{background-image:url("/assets/icons/shield_o.png");}
+.i-navigation{background-image:url("/assets/icons/navigation.png");}
+.i-navigation-w{background-image:url("/assets/icons/navigation_w.png");}
+.i-navigation-o{background-image:url("/assets/icons/navigation_o.png");}
+.i-check{background-image:url("/assets/icons/check.png");}
+.i-check-w{background-image:url("/assets/icons/check_w.png");}
+.i-check-o{background-image:url("/assets/icons/check_o.png");}
+.i-chevronLeft{background-image:url("/assets/icons/chevronLeft.png");}
+.i-chevronLeft-w{background-image:url("/assets/icons/chevronLeft_w.png");}
+.i-chevronLeft-o{background-image:url("/assets/icons/chevronLeft_o.png");}
+.i-info{background-image:url("/assets/icons/info.png");}
+.i-info-w{background-image:url("/assets/icons/info_w.png");}
+.i-info-o{background-image:url("/assets/icons/info_o.png");}
+.i-user{background-image:url("/assets/icons/user.png");}
+.i-user-w{background-image:url("/assets/icons/user_w.png");}
+.i-user-o{background-image:url("/assets/icons/user_o.png");}
+.i-bookmark{background-image:url("/assets/icons/bookmark.png");}
+.i-bookmark-w{background-image:url("/assets/icons/bookmark_w.png");}
+.i-bookmark-o{background-image:url("/assets/icons/bookmark_o.png");}
+.i-volume2{background-image:url("/assets/icons/volume2.png");}
+.i-volume2-w{background-image:url("/assets/icons/volume2_w.png");}
+.i-volume2-o{background-image:url("/assets/icons/volume2_o.png");}
+.i-grid{background-image:url("/assets/icons/grid.png");}
+.i-grid-w{background-image:url("/assets/icons/grid_w.png");}
+.i-grid-o{background-image:url("/assets/icons/grid_o.png");}
+.i-heart{background-image:url("/assets/icons/heart.png");}
+.i-heart-w{background-image:url("/assets/icons/heart_w.png");}
+.i-heart-o{background-image:url("/assets/icons/heart_o.png");}
+.i-phone{background-image:url("/assets/icons/phone.png");}
+.i-phone-w{background-image:url("/assets/icons/phone_w.png");}
+.i-phone-o{background-image:url("/assets/icons/phone_o.png");}
+.i-settings{background-image:url("/assets/icons/settings.png");}
+.i-settings-w{background-image:url("/assets/icons/settings_w.png");}
+.i-settings-o{background-image:url("/assets/icons/settings_o.png");}
+.i-calendar{background-image:url("/assets/icons/calendar.png");}
+.i-calendar-w{background-image:url("/assets/icons/calendar_w.png");}
+.i-calendar-o{background-image:url("/assets/icons/calendar_o.png");}
+.i-sliders{background-image:url("/assets/icons/sliders.png");}
+.i-sliders-w{background-image:url("/assets/icons/sliders_w.png");}
+.i-sliders-o{background-image:url("/assets/icons/sliders_o.png");}
+
+/* 大字模式：放大关键正文 */
+.big .ac-title{font-size:42rpx;}
+.big .meta{font-size:34rpx;}
+.big .tag{font-size:28rpx;}
+.big .cl{font-size:32rpx;}
+.big .dtitle{font-size:50rpx;}
+.big .rv{font-size:36rpx;}
+.big .it{font-size:36rpx;}
+.big .rk{font-size:28rpx;}
+.big .greet{font-size:60rpx;}
+.big .b{font-size:54rpx;}
+.big .chip{font-size:34rpx;}
+.big .pn{font-size:48rpx;}

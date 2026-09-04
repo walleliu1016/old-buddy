@@ -1,0 +1,32 @@
+<view class="page {{bigFont?'big':''}}">
+  <view class="sec-title"><view class="bar"></view>我的报名</view>
+  <view class="hint">共 {{total}} 条记录，{{pendingCount}} 条待参加</view>
+
+  <view class="bk-seg">
+    <view class="rseg {{tab==='pending'?'on':''}}" bindtap="onTab" data-tab="pending">待参加 {{pendingCount}}</view>
+    <view class="rseg {{tab==='all'?'on':''}}" bindtap="onTab" data-tab="all">全部 {{total}}</view>
+  </view>
+
+  <view class="feed">
+    <view wx:for="{{list}}" wx:key="id" class="card bk {{item.status==='待参加'?'pending':(item.status==='已取消'?'canceled':'done')}}" bindtap="onCardTap" data-id="{{item.id}}">
+      <view class="b-top">
+        <view class="bstat {{item.status==='待参加'?'pending':(item.status==='已取消'?'canceled':'done')}}">{{item.status}}</view>
+        <view class="bkind">{{item.kind==='course'?'长期课':'单次活动'}}</view>
+      </view>
+      <view class="ttl">{{item.title}}</view>
+      <view class="meta"><view class="i-clock i-24"></view><text>{{item.schedule||item.time}}</text></view>
+      <view class="meta"><view class="i-mapPin i-24"></view><text>{{item.venue||item.address}}</text></view>
+      <view wx:if="{{item.start}}" class="meta"><view class="i-calendar i-24"></view><text>{{item.start}}</text></view>
+      <view class="bkfoot">
+        <view class="btime">报名于 {{item.bookedAt}} · {{item.fee}}</view>
+        <view wx:if="{{item.status==='待参加'}}" class="bbtn" catchtap="onCancel" data-id="{{item.id}}">取消报名</view>
+      </view>
+    </view>
+    <view wx:if="{{list.length===0}}" class="empty">
+      <view class="eico"><view class="i-calendar i-30"></view></view>
+      {{tab==='pending' ? '还没有待参加的活动，去「附近」或「课程」看看。' : '还没有报名记录。'}}
+    </view>
+  </view>
+
+  <view class="anti"><view class="i-shield i-26"></view><view class="at"><text class="b">防骗提醒：</text>任何要求您转账、提供短信验证码或付费“代抢名额”的，都是诈骗。报名只走官方渠道。</view></view>
+</view>

@@ -1,0 +1,8 @@
+<view class="rseg-wrap">
+  <block wx:for="{{radii}}" wx:key="*this">
+    <view class="rseg {{item===current?'on':''}}" bindtap="onTap" data-r="{{item}}">
+      <text class="rn">{{item}}km</text>
+      <text class="rcnt">{{stats[item]!=null?stats[item]:'…'}} 场</text>
+    </view>
+  </block>
+</view>

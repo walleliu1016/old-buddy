@@ -1,0 +1,10 @@
+{
+  "name": "activities",
+  "version": "1.0.0",
+  "description": "old-buddy cloud function: activities",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

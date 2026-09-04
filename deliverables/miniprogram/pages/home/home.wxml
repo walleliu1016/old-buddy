@@ -1,0 +1,50 @@
+<view class="page {{bigFont?'big':''}}">
+  <view class="hero">
+    <view class="greet">{{greeting}}，{{locationName}}的老朋友</view>
+    <view class="sub">附近的单次活动 · 按离您由近到远</view>
+  </view>
+
+  <view class="filter-bar">
+    <view class="fsum">
+      <view class="fpill loc" bindtap="onLocate"><view class="i-mapPin i-20"></view><text>{{locationName}}</text></view>
+      <text class="fpill">{{radius}}km</text>
+      <text class="fpill">{{catLabel}}</text>
+      <text class="fcount">{{summary}} 场</text>
+    </view>
+    <view class="filter-btn" bindtap="openFilter">筛选</view>
+  </view>
+
+  <view class="sec-title"><view class="bar"></view>附近 · 本周活动</view>
+  <view class="hint">共 {{feed.length}} 场，点卡片看详情、收藏或报名</view>
+  <view class="feed">
+    <activity-card wx:for="{{feed}}" wx:key="id" activity="{{item}}" fav="{{item.fav}}" bind:tap="onCardTap" bind:fav="onCardFav"/>
+    <view wx:if="{{feed.length===0 && !loading}}" class="empty">
+      <view class="eico"><view class="i-search i-30"></view></view>
+      附近 {{radius}}km 内暂无符合条件的活动，换个筛选或稍后再来看看。
+    </view>
+  </view>
+  <view class="src-note">「附近」只收单次活动（讲座 / 演出 / 展览 / 市集 / 便民）。<br/>需要报名入学的长期课，请看底部「课程」。</view>
+
+  <view wx:if="{{showFilter}}" class="sheet-overlay" bindtap="closeFilter">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-handle"></view>
+      <view class="sheet-title">筛选条件</view>
+      <view class="sheet-sec">
+        <view class="ss-label">距离</view>
+        <view class="chips">
+          <view wx:for="{{radii}}" wx:key="*this" class="chip {{item===fselRadius?'on':''}}" bindtap="pickRadius" data-r="{{item}}">{{item}}km</view>
+        </view>
+      </view>
+      <view class="sheet-sec">
+        <view class="ss-label">分类</view>
+        <view class="chips">
+          <view wx:for="{{categories}}" wx:key="key" class="chip {{item.key===fselCat?'on':''}}" bindtap="pickCat" data-cat="{{item.key}}">{{item.label}}</view>
+        </view>
+      </view>
+      <view class="sheet-acts">
+        <view class="sbtn reset" bindtap="resetFilter">重置</view>
+        <view class="sbtn ok" bindtap="applyFilter">查看结果</view>
+      </view>
+    </view>
+  </view>
+</view>

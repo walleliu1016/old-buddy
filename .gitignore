@@ -1,0 +1,22 @@
+# 项目数据（含缓存/记忆，禁止提交）
+.workbuddy/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+envs/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# 系统 / 编辑器
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/

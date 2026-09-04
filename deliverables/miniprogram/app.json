@@ -1,0 +1,28 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/detail/detail",
+    "pages/courses/courses",
+    "pages/bookings/bookings",
+    "pages/me/me"
+  ],
+  "window": {
+    "navigationBarTitleText": "老友时光",
+    "navigationBarBackgroundColor": "#0E6E6E",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F4EFE4"
+  },
+  "tabBar": {
+    "color": "#8A9798",
+    "selectedColor": "#0E6E6E",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      { "text": "附近", "pagePath": "pages/home/home", "iconPath": "assets/tabbar/tab_home.png", "selectedIconPath": "assets/tabbar/tab_home_on.png" },
+      { "text": "课程", "pagePath": "pages/courses/courses", "iconPath": "assets/tabbar/tab_courses.png", "selectedIconPath": "assets/tabbar/tab_courses_on.png" },
+      { "text": "我的", "pagePath": "pages/me/me", "iconPath": "assets/tabbar/tab_me.png", "selectedIconPath": "assets/tabbar/tab_me_on.png" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

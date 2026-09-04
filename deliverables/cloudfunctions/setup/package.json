@@ -1,0 +1,10 @@
+{
+  "name": "setup",
+  "version": "1.0.0",
+  "description": "old-buddy cloud function: setup (create collections)",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

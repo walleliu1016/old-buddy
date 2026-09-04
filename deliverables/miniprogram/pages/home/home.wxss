@@ -1,0 +1,83 @@
+.page { padding-bottom: 24rpx; }
+.hero {
+  margin: 24rpx 24rpx 6rpx;
+  background: linear-gradient(135deg, var(--primary), var(--primary-d));
+  border-radius: var(--r-card); padding: 24rpx 32rpx 22rpx; color: #fff; position: relative; overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(20,45,45,.06);
+}
+.hero::after {
+  content: ""; position: absolute; right: -60rpx; top: -60rpx;
+  width: 220rpx; height: 220rpx; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,116,59,.28), transparent 70%);
+}
+.greet { font-size: 44rpx; font-weight: 800; line-height: 1.25; }
+.sub { font-size: 26rpx; opacity: .9; margin-top: 6rpx; }
+
+.sec-title { font-size: 36rpx; font-weight: 800; color: var(--ink); margin: 36rpx 32rpx 16rpx; display: flex; align-items: center; gap: 14rpx; }
+.sec-title .bar { width: 8rpx; height: 32rpx; background: var(--accent); border-radius: 6rpx; }
+.hint { font-size: 26rpx; color: var(--ink-2); margin: 0 32rpx 12rpx; }
+
+.cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20rpx; padding: 0 24rpx; }
+.cat-cell {
+  background: var(--surface); border: 1rpx solid var(--line); border-radius: var(--r-box);
+  padding: 24rpx 8rpx 20rpx; display: flex; flex-direction: column; align-items: center; gap: 14rpx;
+  box-shadow: 0 2rpx 12rpx rgba(20,45,45,.06);
+}
+.cico { width: 88rpx; height: 88rpx; border-radius: 24rpx; background: var(--primary-soft); display: flex; align-items: center; justify-content: center; }
+.cl { font-size: 28rpx; font-weight: 600; color: var(--ink); }
+
+.feed { padding: 8rpx 24rpx 0; }
+.empty { text-align: center; color: var(--ink-3); padding: 70rpx 36rpx; font-size: 30rpx; }
+.empty .eico { margin: 0 auto 20rpx; width: 110rpx; height: 110rpx; border-radius: 30rpx; background: var(--primary-soft); display: flex; align-items: center; justify-content: center; color: var(--primary); }
+.src-note { margin: 32rpx 22rpx 8rpx; font-size: 22rpx; color: var(--ink-3); line-height: 1.7; text-align: center; }
+
+/* 首页筛选条 */
+.filter-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 20rpx;
+  margin: 16rpx 24rpx 4rpx; padding: 18rpx 22rpx;
+  background: var(--surface); border: 1rpx solid var(--line);
+  border-radius: 24rpx; box-shadow: 0 2rpx 12rpx rgba(20,45,45,.06);
+}
+.filter-bar .fsum { display: flex; gap: 10rpx; flex-wrap: wrap; align-items: center; }
+.fpill {
+  display: inline-flex; align-items: center; font-size: 26rpx; font-weight: 700;
+  padding: 10rpx 22rpx; border-radius: var(--r-pill);
+  background: var(--primary-soft); color: var(--primary);
+}
+.fpill.loc { max-width: 38vw; }
+.fpill.loc text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fcount { margin-left: 8rpx; background: var(--primary); color: #fff; border-radius: var(--r-pill); padding: 10rpx 22rpx; }
+.filter-btn {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 28rpx; font-weight: 700; padding: 18rpx 32rpx; border-radius: 20rpx;
+  background: var(--primary); color: #fff;
+}
+.filter-btn:active { background: var(--primary-d); }
+
+/* 通用 chip */
+.chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 16rpx 30rpx; border-radius: var(--r-pill);
+  border: 1rpx solid var(--line); background: var(--surface);
+  color: var(--ink); font-size: 28rpx; font-weight: 700;
+}
+.chip.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+.chips { display: flex; flex-wrap: wrap; gap: 18rpx; }
+
+/* 筛选底 sheet */
+.sheet-overlay {
+  position: fixed; inset: 0; background: rgba(20,30,30,.5);
+  display: flex; align-items: flex-end; justify-content: center; z-index: 60;
+}
+.sheet {
+  width: 100%; background: var(--surface);
+  border-radius: 40rpx 40rpx 0 0; padding: 16rpx 36rpx calc(36rpx + env(safe-area-inset-bottom));
+}
+.sheet-handle { width: 72rpx; height: 8rpx; border-radius: 6rpx; background: var(--line); margin: 10rpx auto 24rpx; }
+.sheet-title { font-size: 38rpx; font-weight: 800; color: var(--ink); margin-bottom: 28rpx; }
+.sheet-sec { margin-bottom: 32rpx; }
+.ss-label { font-size: 28rpx; font-weight: 700; color: var(--ink-2); margin-bottom: 18rpx; }
+.sheet-acts { display: flex; gap: 20rpx; margin-top: 16rpx; }
+.sbtn { flex: 1; height: 96rpx; border-radius: 24rpx; display: flex; align-items: center; justify-content: center; font-size: 32rpx; font-weight: 700; }
+.sbtn.reset { background: var(--surface-2); color: var(--ink-2); }
+.sbtn.ok { background: var(--accent); color: #fff; }

@@ -1,0 +1,10 @@
+{
+  "name": "sync",
+  "version": "1.0.0",
+  "description": "old-buddy cloud function: sync",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

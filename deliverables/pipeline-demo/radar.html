@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>old-buddy 半径雷达 · 演示</title>
+<style>
+  body{margin:0;font-family:-apple-system,'PingFang SC',sans-serif;background:#fff;color:#2C2C2A;}
+  .wrap{max-width:760px;margin:0 auto;padding:24px;}
+  h1{font-size:20px;font-weight:500;margin:0 0 4px;}
+  .sub{color:#5F5E5A;font-size:13px;margin-bottom:16px;}
+  .card{border:1px solid #e6e6e6;border-radius:12px;padding:16px;margin-bottom:16px;}
+  .summary{background:#EAF3DE;color:#27500A;border-radius:10px;padding:12px 14px;font-size:14px;line-height:1.6;}
+  .stats{color:#5F5E5A;font-size:13px;margin-top:8px;}
+  .row{display:flex;gap:16px;flex-wrap:wrap;}
+  .col{flex:1;min-width:280px;}
+  svg{width:100%;height:auto;}
+  .prov{font-size:12px;color:#8a8a8a;margin-top:10px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>old-buddy · 附近活动半径雷达</h1>
+  <div class="sub">演示定位点：人民广场（演示定位点） · 默认半径 1km（用户可调 1/3/5/10km）</div>
+
+  <div class="card">
+    <div class="summary">在您 1km 范围内发现 3 场活动。类型分布：文艺 2 场、学习 1 场。最近的一场是「经典歌剧导赏」，距您约 0.02km（周五 19:30，¥80）。</div>
+    <div class="stats">多半径统计 — <b>1km</b>: 3 场 · <b>3km</b>: 8 场 · <b>5km</b>: 11 场 · <b>10km</b>: 24 场</div>
+    <div class="prov">活动数据源：<b>seed</b>（live 0 / seed 24） · 地理编码：<b>seed</b></div>
+  </div>
+
+  <div class="row">
+    <div class="col card">
+      <svg viewBox="0 0 680 600" role="img" aria-label="附近活动半径雷达">
+        <circle cx="340" cy="300" r="50.0" fill="none" stroke="#3B6D11" stroke-width="2" stroke-dasharray="none"/>
+<text x="344" y="262.0" font-size="10" fill="#5F5E5A" font-family="-apple-system, PingFang SC, sans-serif">1km</text>
+<circle cx="340" cy="300" r="150.0" fill="none" stroke="#d9dde3" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="344" y="162.0" font-size="10" fill="#5F5E5A" font-family="-apple-system, PingFang SC, sans-serif">3km</text>
+<circle cx="340" cy="300" r="250.0" fill="none" stroke="#d9dde3" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="344" y="62.0" font-size="10" fill="#5F5E5A" font-family="-apple-system, PingFang SC, sans-serif">5km</text>
+        <circle cx="339.0" cy="299.4" r="6" fill="#3B6D11" stroke="#fff" stroke-width="1.5"/><text x="347.0" y="293.4" font-size="10" fill="#27500A" font-family="-apple-system, PingFang SC, sans-serif">0.02km</text>
+<circle cx="347.6" cy="309.4" r="6" fill="#3B6D11" stroke="#fff" stroke-width="1.5"/><text x="355.6" y="303.4" font-size="10" fill="#27500A" font-family="-apple-system, PingFang SC, sans-serif">0.24km</text>
+<circle cx="336.7" cy="329.9" r="6" fill="#3B6D11" stroke="#fff" stroke-width="1.5"/><text x="344.7" y="323.9" font-size="10" fill="#27500A" font-family="-apple-system, PingFang SC, sans-serif">0.60km</text>
+        <circle cx="340" cy="300" r="7" fill="#534AB7" stroke="#fff" stroke-width="2"/>
+        <text x="350" y="322" font-size="11" fill="#3C3489" font-family="-apple-system,PingFang SC,sans-serif">您的位置</text>
+      </svg>
+    </div>
+    <div class="col card">
+      <div style="font-weight:500;margin-bottom:4px;">1km 范围内活动</div>
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #eee;"><span style="background:#EAF3DE;color:#27500A;border-radius:6px;padding:2px 8px;font-size:12px;">文艺</span><div style="flex:1;"><div style="font-weight:500;color:#2C2C2A;">经典歌剧导赏</div><div style="font-size:12px;color:#5F5E5A;">上海大剧院 · 周五 19:30 · ¥80</div></div><span style="font-weight:500;color:#3B6D11;font-size:13px;">0.02km</span></div><div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #eee;"><span style="background:#EAF3DE;color:#27500A;border-radius:6px;padding:2px 8px;font-size:12px;">学习</span><div style="flex:1;"><div style="font-weight:500;color:#2C2C2A;">书法入门班</div><div style="font-size:12px;color:#5F5E5A;">上海博物馆 · 周四 09:30 · 免费</div></div><span style="font-weight:500;color:#3B6D11;font-size:13px;">0.24km</span></div><div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #eee;"><span style="background:#EAF3DE;color:#27500A;border-radius:6px;padding:2px 8px;font-size:12px;">文艺</span><div style="flex:1;"><div style="font-weight:500;color:#2C2C2A;">市民合唱团招新</div><div style="font-size:12px;color:#5F5E5A;">上海音乐厅 · 周三 14:00 · 免费</div></div><span style="font-weight:500;color:#3B6D11;font-size:13px;">0.60km</span></div>
+    </div>
+  </div>
+  <div class="sub">说明：坐标为演示示意；真实环境由 AI agent 自动爬取上海公共开放数据并地理编码后实时生成。生产接入需：① 上海开放数据平台实名认证获取 app key；② 高德/腾讯地理编码 key；③ 建议部署在国内服务器规避 WAF/限流。</div>
+</div>
+</body>
+</html>

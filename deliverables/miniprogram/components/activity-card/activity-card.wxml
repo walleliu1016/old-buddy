@@ -1,0 +1,10 @@
+<view class="ac-card" bindtap="onTap">
+  <view class="ac-top">
+    <view class="tag"><view class="i-compass i-22"></view><text>{{activity.type}}</text></view>
+    <view class="fav {{fav?'on':''}}" catchtap="onFav"><view class="i-heart {{fav?'i-26':'i-24'}}"></view></view>
+  </view>
+  <view class="ac-title">{{activity.title}}</view>
+  <view class="meta"><view class="i-clock i-24"></view><text>{{activity.time}}</text></view>
+  <view class="meta"><view class="i-mapPin i-24"></view><text><text class="dist">{{activity.distance_km}}km</text> · {{activity.venue||activity.address}}</text></view>
+  <view class="fee {{free?'free':'paid'}}">{{activity.fee||(free?'免费':'收费')}}</view>
+</view>

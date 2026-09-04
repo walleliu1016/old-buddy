@@ -1,0 +1,28 @@
+<view class="page {{bigFont?'big':''}}">
+  <view class="profile">
+    <view class="avatar"><view class="i-user i-38"></view></view>
+    <view><view class="pn">老朋友</view><view class="ps">用心过好每一天</view></view>
+  </view>
+
+  <view class="list">
+    <view class="item" bindtap="onBookings"><view class="ii"><view class="i-user i-26"></view></view><view class="it">我的报名</view><view class="iv">{{pendingCount}} 待参加</view><view class="arrow">›</view></view>
+    <view class="item" bindtap="onFavList"><view class="ii"><view class="i-bookmark i-26"></view></view><view class="it">我的收藏</view><view class="iv">{{favCount}} 个</view><view class="arrow">›</view></view>
+    <view class="item" bindtap="onToggleFont"><view class="ii"><view class="i-type i-26"></view></view><view class="it">大字模式</view><view class="switch {{settings.bigFont?'on':''}}"></view></view>
+    <view class="item" bindtap="onToggleVoice"><view class="ii"><view class="i-volume2 i-26"></view></view><view class="it">语音播报</view><view class="switch {{settings.voice?'on':''}}"></view></view>
+    <view class="item" bindtap="onLocate"><view class="ii"><view class="i-mapPin i-26"></view></view><view class="it">定位设置</view><view class="iv">{{locationName}}</view></view>
+  </view>
+
+  <view class="list">
+    <view class="item" bindtap="onAnti"><view class="ii"><view class="i-shield i-26"></view></view><view class="it">防骗须知</view><view class="arrow">›</view></view>
+    <view class="item" bindtap="onAbout"><view class="ii"><view class="i-info i-26"></view></view><view class="it">关于老友时光</view><view class="arrow">›</view></view>
+  </view>
+
+  <view class="list" wx:if="{{favs.length>0}}">
+    <view class="favitem" wx:for="{{favs}}" wx:key="id" bindtap="onOpenFav" data-id="{{item.id}}">
+      <view class="ii"><view class="i-bookmark i-26"></view></view>
+      <view class="it">{{item.title}}</view>
+      <view class="iv">{{item.type}}</view>
+    </view>
+  </view>
+  <view wx:else class="fav-empty">还没有收藏的活动，去“附近”挑挑看吧。</view>
+</view>

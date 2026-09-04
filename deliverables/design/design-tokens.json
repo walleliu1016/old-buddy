@@ -1,0 +1,151 @@
+{
+  "$meta": {
+    "product": "old-buddy",
+    "version": "1.0.0",
+    "date": "2026-09-02",
+    "platform": "wechat-miniprogram",
+    "register": "product",
+    "scales": { "designVariance": 3, "motionIntensity": 2, "visualDensity": 2 },
+    "note": "唯一色值来源。前端 JS 侧需要色值时从本文件 import，禁止在 WXSS/JS 中抄写裸色值（#fff 除外）。"
+  },
+
+  "color": {
+    "bg":              { "value": "#F4F6F8", "type": "color", "layer": "A1", "use": "页面底色，冷极浅灰防眩光" },
+    "surface":         { "value": "#FFFFFF", "type": "color", "layer": "A1", "use": "卡片/弹层/输入框" },
+    "surface-2":       { "value": "#E8EDF1", "type": "color", "layer": "B-slot", "use": "分段轨道/禁用底/骨架块" },
+    "fg":              { "value": "#16202A", "type": "color", "layer": "A1", "use": "主文本", "contrastOnSurface": "16.5:1" },
+    "fg-2":            { "value": "#33414F", "type": "color", "layer": "B-slot", "use": "次级文本", "contrastOnSurface": "10.3:1" },
+    "muted":           { "value": "#5A6875", "type": "color", "layer": "A1", "use": "三级元数据，仅允许 >=16px", "contrastOnSurface": "5.7:1" },
+    "border":          { "value": "#7C8A96", "type": "color", "layer": "A1", "use": "结构边框", "contrastOnBg": "3.3:1" },
+    "border-soft":     { "value": "#DCE3E9", "type": "color", "layer": "B-slot", "use": "卡片内分隔线，不承载信息" },
+    "accent":          { "value": "#0B4F6C", "type": "color", "layer": "A1", "use": "主色/可点击唯一信号", "contrastOnSurface": "8.9:1" },
+    "accent-on":       { "value": "#FFFFFF", "type": "color", "layer": "A2", "use": "主色块上前景" },
+    "accent-pressed":  { "value": "#083B51", "type": "color", "layer": "A2", "use": "按下态，仅变色不变形" },
+    "accent-wash":     { "value": "#E7EFF3", "type": "color", "layer": "A2", "use": "主色浅底" },
+    "success":         { "value": "#146B3A", "type": "color", "layer": "A2", "use": "免费/已核验", "contrastOnSurface": "6.6:1" },
+    "success-wash":    { "value": "#E4F0E9", "type": "color", "layer": "A2", "use": "免费标签底" },
+    "warn":            { "value": "#8A5200", "type": "color", "layer": "A2", "use": "收费/待核实/防骗提示", "contrastOnSurface": "6.3:1" },
+    "warn-wash":       { "value": "#FBF0DE", "type": "color", "layer": "A2", "use": "防骗提示条底" },
+    "danger":          { "value": "#B3261E", "type": "color", "layer": "A2", "use": "错误/举报/已收藏心形", "contrastOnSurface": "6.6:1" },
+    "urgent":          { "value": "#B23A0E", "type": "color", "layer": "A2", "use": "辅色：今天/即将开始", "contrastOnSurface": "6.0:1" },
+    "icon-color":      { "value": "#33414F", "type": "color", "layer": "B-slot", "use": "图标默认色（= fg-2）" },
+    "overlay":         { "value": "rgba(22,32,42,0.45)", "type": "color", "layer": "A2", "use": "弹层遮罩" }
+  },
+
+  "colorDenylist": {
+    "gradients": ["#7C3AED->#A855F7", "#9333EA->#EC4899", "indigo->pink 任意组合"],
+    "accents": ["#6366F1", "#4F46E5"],
+    "raw": ["#000000", "#808080"],
+    "backgroundBands": "OKLCH L 0.84-0.97 / C<0.06 / hue 40-100（奶油/米色/沙色）"
+  },
+
+  "typeChip": {
+    "arts":    { "bg": "#E7EFF3", "fg": "#0B4F6C", "label": "文艺", "icons": ["brush", "music_note", "sports_gymnastics", "theaters"] },
+    "study":   { "bg": "#EDE9E2", "fg": "#6B4A17", "label": "学习", "icons": ["co_present", "smartphone"] },
+    "health":  { "bg": "#E4F0E9", "fg": "#146B3A", "label": "健康", "icons": ["self_improvement", "medical_services"] },
+    "public":  { "bg": "#EAE7F2", "fg": "#3D3A66", "label": "公益", "icons": ["volunteer_activism"] }
+  },
+
+  "font": {
+    "display": { "value": "\"PingFang SC\", \"HarmonyOS Sans SC\", \"Source Han Sans SC\", \"Microsoft YaHei\", sans-serif", "type": "fontFamily", "weight": 600 },
+    "body":    { "value": "\"PingFang SC\", \"HarmonyOS Sans SC\", \"Source Han Sans SC\", \"Microsoft YaHei\", sans-serif", "type": "fontFamily", "weight": 400 },
+    "num":     { "value": "\"SF Pro Text\", \"DIN Alternate\", \"PingFang SC\", sans-serif", "type": "fontFamily", "weight": 500, "features": "tabular-nums" },
+    "$note": "中文 WebFont 体积 5-10MB，禁止 wx.loadFontFace。层级不得只靠字重传达（安卓 600 可能回落 400），必须字号+颜色+位置三重编码。"
+  },
+
+  "fontSize": {
+    "$unit": "px（禁止 rpx：320px 屏下 18px 会被压到 15.4px）",
+    "$scales": { "normal": 1.0, "large": 1.15, "xlarge": 1.3 },
+    "$autoSelect": "读 wx.getSystemInfoSync().fontSizeSetting，>=18 用 large，>=22 用 xlarge",
+    "xs":   { "normal": 14, "large": 16, "xlarge": 18, "use": "仅徽章内，禁止正文" },
+    "sm":   { "normal": 16, "large": 18, "xlarge": 21, "use": "字段 label/元数据（最小允许）" },
+    "base": { "normal": 18, "large": 21, "xlarge": 23, "use": "正文基准" },
+    "md":   { "normal": 20, "large": 23, "xlarge": 26, "use": "卡片副信息/列表项/按钮文字" },
+    "lg":   { "normal": 22, "large": 25, "xlarge": 29, "use": "卡片标题" },
+    "xl":   { "normal": 26, "large": 30, "xlarge": 34, "use": "区块标题/页内大标题" },
+    "2xl":  { "normal": 30, "large": 34, "xlarge": 39, "use": "详情页活动名" },
+    "3xl":  { "normal": 34, "large": 39, "xlarge": 44, "use": "半径统计强调数字" }
+  },
+
+  "leading":  { "body": 1.75, "tight": 1.35, "display": 1.2 },
+  "tracking": { "cjk": "0.01em", "display": "0" },
+
+  "space": {
+    "$grid": 4,
+    "1": 4, "2": 8, "3": 12, "4": 16, "5": 20, "6": 24, "8": 32, "10": 40, "12": 48, "16": 64,
+    "$denylist": [5, 7, 13, 15, 18, 22, 30],
+    "pagePaddingX": 20, "pagePaddingXSmall": 16, "cardPadding": 20, "cardGap": 16, "sectionGap": 32
+  },
+
+  "radius": { "sm": 10, "md": 14, "lg": 18, "pill": 9999, "$cardMax": 16 },
+
+  "shadow": {
+    "flat":   { "value": "none", "use": "默认卡片：1px solid border + 无阴影" },
+    "raised": { "value": "0 2px 8px rgba(11,79,108,0.10)", "use": "吸底栏/自定义 tabBar（无边框）" },
+    "sheet":  { "value": "0 -4px 20px rgba(22,32,42,0.16)", "use": "半屏弹层（无边框）" },
+    "$rule": "同一元素禁止 1px 边框 与 blur>=16px 阴影并存"
+  },
+
+  "motion": {
+    "fast":  { "value": "120ms", "use": "按下反馈（仅变色）" },
+    "base":  { "value": "180ms", "use": "状态切换/分段滑块/标签选中" },
+    "sheet": { "value": "240ms", "use": "弹层升起/落下" },
+    "easeStandard": "cubic-bezier(0.2, 0, 0, 1)",
+    "easeLinear": "linear",
+    "reducedOverride": "0.01ms",
+    "$denylist": ["spring", "bounce", "elastic", "back", "任何 overshoot 缓动", "scale 按下态", "位移按下态", "自动轮播", ">3Hz 闪烁"]
+  },
+
+  "size": {
+    "touchMin": 48,
+    "buttonPrimaryH": 56,
+    "buttonSecondaryH": 56,
+    "buttonTextH": 48,
+    "iconButton": 48,
+    "listRowH": 64,
+    "chipH": 48,
+    "segmentH": 48,
+    "inputH": 56,
+    "tabBarH": 64,
+    "tabBarHXLarge": 76,
+    "categoryCellH": 104,
+    "adjacentGapMin": 8,
+    "sheetMaxH": "76vh"
+  },
+
+  "icon": {
+    "library": "Material Symbols Outlined",
+    "axes": { "FILL": 0, "wght": 500, "GRAD": 0, "opsz": 24 },
+    "sizes": [20, 24, 28],
+    "$sizeNote": "通用基线 16/20/24 因适老化整体上移一档；全项目仅此三档，不混用",
+    "integration": "导出单色 SVG -> CSS mask-image data-uri，颜色由 icon-color 控制",
+    "$denylist": ["iconfont/@font-face 图标方案（安卓基线错位）", "第二套图标库", "emoji 作功能图标", "任何图标单独出现不配文字"],
+    "names": [
+      "location_on", "my_location", "near_me", "directions",
+      "grid_view", "format_list_bulleted", "favorite", "person", "settings", "search",
+      "calendar_month", "schedule", "share", "arrow_back",
+      "shield", "verified_user", "info", "warning",
+      "volume_up", "pause", "format_size", "motion_photos_off",
+      "payments", "phone", "chevron_right", "close", "check", "check_circle", "error", "refresh",
+      "brush", "music_note", "self_improvement", "sports_gymnastics",
+      "co_present", "medical_services", "palette", "theaters",
+      "smartphone", "volunteer_activism"
+    ]
+  },
+
+  "a11y": {
+    "contrastTarget": { "bodyText": "7:1", "allText": "4.5:1", "nonText": "3:1" },
+    "stateEncoding": "icon + text + color 三重，禁止纯色编码",
+    "requiredAttrs": ["aria-label（全部可点元素）", "role=button（卡片）", "aria-hidden=true（装饰元素）"],
+    "reducedMotion": "设置页开关 -> 根节点 data-motion=\"reduced\"（小程序 prefers-reduced-motion 支持不稳）",
+    "fontScaleAttr": "根节点 data-fontscale=\"normal|large|xlarge\""
+  },
+
+  "distanceFormat": {
+    "veryNear": { "threshold": 0.05, "text": "就在你旁边" },
+    "meters":   { "threshold": 1, "text": "离我 {N} 米", "round": 10 },
+    "km":       { "text": "离我 {N} 公里", "decimals": 1 },
+    "walkSpeedMetersPerMin": 70,
+    "walkText": "走路约 {N} 分钟（向上取整）"
+  }
+}

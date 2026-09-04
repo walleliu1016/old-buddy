@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "activity-card": "/components/activity-card/activity-card",
+    "radius-seg": "/components/radius-seg/radius-seg"
+  },
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": "老友时光"
+}

@@ -1,0 +1,69 @@
+{
+  "user": {
+    "lat": 31.2304,
+    "lng": 121.4737,
+    "name": "人民广场（演示定位点）"
+  },
+  "default_radius_km": 1.0,
+  "summary": "在您 1km 范围内发现 3 场活动。类型分布：文艺 2 场、学习 1 场。最近的一场是「经典歌剧导赏」，距您约 0.02km（周五 19:30，¥80）。",
+  "nearby": [
+    {
+      "id": 3,
+      "title": "经典歌剧导赏",
+      "type": "文艺",
+      "venue": "上海大剧院",
+      "address": "上海市黄浦区人民大道300号",
+      "lat": 31.2305,
+      "lng": 121.4735,
+      "time": "周五 19:30",
+      "fee": "¥80",
+      "signup": "https://example.com/ticket",
+      "source": "seed",
+      "geo_source": "seed",
+      "distance_km": 0.022
+    },
+    {
+      "id": 2,
+      "title": "书法入门班",
+      "type": "学习",
+      "venue": "上海博物馆",
+      "address": "上海市黄浦区人民大道201号",
+      "lat": 31.2287,
+      "lng": 121.4753,
+      "time": "周四 09:30",
+      "fee": "免费",
+      "signup": "现场报名",
+      "source": "seed",
+      "geo_source": "seed",
+      "distance_km": 0.243
+    },
+    {
+      "id": 1,
+      "title": "市民合唱团招新",
+      "type": "文艺",
+      "venue": "上海音乐厅",
+      "address": "上海市黄浦区延安东路523号",
+      "lat": 31.225,
+      "lng": 121.473,
+      "time": "周三 14:00",
+      "fee": "免费",
+      "signup": "文化云小程序",
+      "source": "seed",
+      "geo_source": "seed",
+      "distance_km": 0.604
+    }
+  ],
+  "radius_stats": {
+    "1": 3,
+    "3": 8,
+    "5": 11,
+    "10": 24
+  },
+  "total": 24,
+  "provenance": {
+    "activities_source": "seed",
+    "live_count": 0,
+    "seed_count": 24,
+    "geo_source": "seed"
+  }
+}

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>老友时光 · UI 重设计 (2026-09-03)</title>
+<style>
+/* ============================================================
+   老友 old-buddy · UI 重设计令牌 (Design Master v2)
+   方向：暖米底 · 信任深青 · 暖橙行动 · 统一线性图标 · 适老可达
+   ============================================================ */
+:root{
+  /* 色彩 */
+  --bg:#F4EFE4;            /* 暖米纸底 */
+  --surface:#FFFFFF;
+  --surface-2:#FBF7EF;
+  --primary:#C8472E;      /* 夕阳红 */
+  --primary-d:#9E3320;
+  --primary-50:#F6E3DC;   /* 红浅底 */
+  --accent:#E8743B;       /* 暖橙行动 */
+  --accent-d:#CF5E27;
+  --accent-50:#FBE7DA;
+  --ink:#1F2A2B;          /* 暖黑正文 */
+  --ink-2:#566667;
+  --ink-3:#8A9798;
+  --line:#E7DFCF;
+  --free:#2E7D5B; --free-50:#E2F1E9;
+  --warn:#B45309; --warn-50:#FBEFDD;
+  --danger:#C0392B;
+  /* 字号（偏大，适老） */
+  --fs-display:30px; --fs-h1:22px; --fs-h2:19px; --fs-title:18px;
+  --fs-body:16px; --fs-cap:14px; --fs-mini:12px;
+  /* 圆角/阴影/间距 */
+  --r-card:20px; --r-btn:14px; --r-pill:999px; --r-box:16px;
+  --sh:0 8px 24px rgba(20,45,45,.10); --sh-sm:0 2px 10px rgba(20,45,45,.06);
+  --pad:16px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:#E3DCCB; color:var(--ink); font-size:var(--fs-body); line-height:1.5;
+  display:flex; justify-content:center; gap:28px; flex-wrap:wrap; padding:24px 12px;
+}
+/* 手机外框 */
+.phone{
+  width:390px; max-width:100%; height:844px; max-height:92vh;
+  background:var(--bg); border-radius:38px; box-shadow:0 24px 60px rgba(0,0,0,.22);
+  overflow:hidden; display:flex; flex-direction:column; position:relative;
+}
+/* 顶栏 */
+#appbar{flex:0 0 auto;background:var(--surface);border-bottom:1px solid var(--line);
+  padding:14px 16px 12px;display:flex;align-items:center;justify-content:space-between;z-index:5}
+.brand{display:flex;align-items:center;gap:8px;font-size:var(--fs-h2);font-weight:800;color:var(--primary);letter-spacing:.5px}
+.brand .logo{width:30px;height:30px;border-radius:9px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center}
+.tools{display:flex;gap:8px}
+.tool{width:44px;height:44px;border:none;border-radius:12px;background:var(--surface-2);color:var(--primary);
+  display:flex;align-items:center;justify-content:center;cursor:pointer}
+.tool:active{background:var(--primary-50)}
+#view{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:12px}
+#view::-webkit-scrollbar{width:0}
+/* 底部 Tab */
+#tabbar{flex:0 0 auto;background:var(--surface);border-top:1px solid var(--line);
+  display:flex;padding:6px 0 max(6px,env(safe-area-inset-bottom))}
+.tab{flex:1;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;color:var(--ink-3);position:relative}
+.tab .lab{font-size:12px;font-weight:600}
+.tab.on{color:var(--primary)}
+.tab.on::before{content:"";position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:34px;height:3px;border-radius:3px;background:var(--primary)}
+.tab svg{width:26px;height:26px}
+
+/* 通用图标 */
+.svg{width:22px;height:22px;display:inline-block;vertical-align:middle;flex:0 0 auto}
+.svg.sm{width:18px;height:18px}.svg.lg{width:28px;height:28px}
+
+/* Hero（压缩两行） */
+.hero{margin:12px 14px 2px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-d) 100%);
+  border-radius:var(--r-card);padding:14px 16px 13px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--sh-sm)}
+.hero::after{content:"";position:absolute;right:-40px;top:-40px;width:130px;height:130px;border-radius:50%;
+  background:radial-gradient(circle,rgba(232,116,59,.30),transparent 70%)}
+.hero .greet{font-size:var(--fs-h2);font-weight:800;line-height:1.25}
+.hero .sub{font-size:var(--fs-cap);opacity:.9;margin-top:3px}
+
+/* 筛选条（吸顶） */
+.filter-bar{position:sticky;top:0;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin:12px 14px 2px;padding:9px 12px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--sh-sm)}
+.fsum{display:flex;gap:6px;flex-wrap:wrap;align-items:center;min-width:0}
+.fpill{display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:700;padding:7px 12px;border-radius:var(--r-pill);background:var(--primary-50);color:var(--primary)}
+.fpill.loc{border:none;cursor:pointer;font-family:inherit;max-width:38vw}
+.fpill.loc span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fcount{margin-left:6px;background:var(--primary);color:#fff;border-radius:var(--r-pill);padding:7px 12px}
+.filter-btn{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;border:none;cursor:pointer;font-size:15px;font-weight:700;
+  padding:9px 15px;border-radius:12px;background:var(--accent);color:#fff}
+.filter-btn:active{background:var(--accent-d)}
+
+.sec-title{font-size:var(--fs-h2);font-weight:800;color:var(--ink);margin:20px 18px 10px;display:flex;align-items:center;gap:8px}
+.sec-title .bar{width:4px;height:18px;background:var(--accent);border-radius:3px}
+.hint{font-size:var(--fs-cap);color:var(--ink-2);margin:0 18px 8px}
+
+/* 活动卡片 */
+.feed{padding:4px 14px 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:16px;margin-bottom:14px;box-shadow:var(--sh-sm);cursor:pointer;position:relative;transition:border-color .15s,box-shadow .15s}
+.card:active{border-color:var(--primary);box-shadow:var(--sh)}
+.card .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;padding:5px 11px;border-radius:var(--r-pill);background:var(--primary-50);color:var(--primary)}
+.fav{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center}
+.fav.on{color:var(--accent);border-color:var(--accent-50);background:var(--accent-50)}
+.card .ttl{font-size:var(--fs-title);font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:12px}
+.meta{display:flex;align-items:center;gap:8px;color:var(--ink-2);font-size:var(--fs-body);margin-bottom:7px}
+.meta svg{color:var(--primary)}
+.meta .dist{color:var(--primary-d);font-weight:700}
+.fee{display:inline-block;margin-top:6px;font-size:13px;font-weight:700;padding:4px 10px;border-radius:var(--r-pill)}
+.fee.free{background:var(--free-50);color:var(--free)}
+.fee.paid{background:var(--accent-50);color:var(--accent-d)}
+.empty{text-align:center;color:var(--ink-3);padding:40px 20px;font-size:var(--fs-body)}
+.empty .eico{margin:0 auto 12px;width:64px;height:64px;border-radius:18px;background:var(--primary-50);color:var(--primary);display:flex;align-items:center;justify-content:center}
+.src-note{margin:18px 14px 8px;font-size:var(--fs-mini);color:var(--ink-3);line-height:1.7;text-align:center}
+
+/* 课程页 Hero */
+.courses-hero{margin:14px 14px 2px;padding:18px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-d) 100%);border-radius:var(--r-card);color:#fff;box-shadow:var(--sh);position:relative;overflow:hidden}
+.courses-hero::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(232,116,59,.35),transparent 70%)}
+.courses-hero .ch-title{display:flex;align-items:center;gap:9px;font-size:var(--fs-h1);font-weight:800}
+.courses-hero .ch-sub{font-size:var(--fs-cap);opacity:.88;margin-top:8px;line-height:1.6}
+.kind-badge{font-size:12px;font-weight:700;padding:5px 11px;border-radius:var(--r-pill);background:var(--accent-50);color:var(--accent-d)}
+.card .cfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.card .seats{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--primary-d)}
+.card .deadline{font-size:13px;color:var(--ink-3)}
+.booked-flag{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:13px;font-weight:700;color:var(--free);background:var(--free-50);padding:4px 10px;border-radius:var(--r-pill)}
+
+/* 我的 */
+.profile{margin:14px;background:linear-gradient(135deg,var(--primary),var(--primary-d));border-radius:var(--r-card);padding:20px;color:#fff;display:flex;align-items:center;gap:14px;box-shadow:var(--sh)}
+.profile .avatar{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center}
+.profile .pn{font-size:var(--fs-h1);font-weight:800}
+.profile .ps{font-size:13px;opacity:.85;margin-top:2px}
+.list{background:var(--surface);margin:0 14px 14px;border-radius:var(--r-card);overflow:hidden;box-shadow:var(--sh-sm)}
+.list .item{display:flex;align-items:center;gap:12px;padding:16px;border-bottom:1px solid var(--line);cursor:pointer}
+.list .item:last-child{border-bottom:none}
+.list .item .ii{width:38px;height:38px;border-radius:11px;background:var(--primary-50);color:var(--primary);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.list .item .it{flex:1;font-size:var(--fs-body);font-weight:600}
+.list .item .iv{font-size:14px;color:var(--ink-3)}
+.switch{width:52px;height:30px;border-radius:var(--r-pill);background:var(--line);position:relative;flex:0 0 auto;transition:background .2s}
+.switch.on{background:var(--primary)}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .2s}
+.switch.on::after{left:25px}
+
+/* 弹层 / 底 sheet */
+.overlay{position:fixed;inset:0;background:rgba(20,30,30,.5);display:flex;align-items:center;justify-content:center;z-index:50;padding:24px}
+.sheet-overlay{position:fixed;inset:0;background:rgba(20,30,30,.5);display:flex;align-items:flex-end;justify-content:center;z-index:60;animation:fade .15s ease}
+.sheet{width:100%;max-width:390px;background:var(--surface);border-radius:22px 22px 0 0;padding:10px 18px calc(18px + env(safe-area-inset-bottom));animation:slideup .2s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes slideup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.sheet-handle{width:40px;height:4px;border-radius:3px;background:var(--line);margin:6px auto 14px}
+.sheet-title{font-size:var(--fs-h2);font-weight:800;color:var(--ink);margin-bottom:14px}
+.sheet-sec{margin-bottom:18px}
+.ss-label{font-size:14px;font-weight:700;color:var(--ink-2);margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{display:inline-flex;align-items:center;justify-content:center;padding:9px 16px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+.sheet-acts{display:flex;gap:12px;margin-top:8px}
+.sbtn{flex:1;height:52px;border-radius:14px;border:none;font-size:16px;font-weight:700;cursor:pointer}
+.sbtn.reset{background:var(--surface-2);color:var(--ink-2)}
+.sbtn.ok{background:var(--accent);color:#fff}
+.sbtn:active{filter:brightness(.95)}
+.dialog{background:var(--surface);border-radius:20px;padding:24px 22px;max-width:320px;width:100%;box-shadow:var(--sh)}
+.dialog .dh{font-size:var(--fs-h1);font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.dialog .db{font-size:var(--fs-body);color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.dialog .dacts{display:flex;gap:12px}
+.dbtn{flex:1;height:50px;border-radius:12px;border:none;font-size:16px;font-weight:700;cursor:pointer}
+.dbtn.cancel{background:var(--surface-2);color:var(--ink-2)}
+.dbtn.ok{background:var(--accent);color:#fff}
+.dbtn.primary{background:var(--primary);color:#fff}
+
+/* 详情弹层 */
+.detail{width:100%;max-width:390px;max-height:88vh;background:var(--surface);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh);animation:slideup .2s ease}
+.detail-hero{padding:24px 18px 18px;background:linear-gradient(135deg,var(--primary),var(--primary-d));color:#fff;position:relative}
+.detail-hero .dtype{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.18);padding:6px 12px;border-radius:var(--r-pill);font-size:13px;font-weight:700}
+.detail-hero .dtitle{font-size:22px;font-weight:800;margin:14px 0 6px;line-height:1.35}
+.detail-hero .ddist{font-size:14px;opacity:.9}
+.detail-body{overflow-y:auto;padding:4px 0 10px}
+.panel{background:var(--surface);margin:14px;border-radius:var(--r-card);padding:6px 16px;box-shadow:var(--sh-sm)}
+.row{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.row .ric{width:38px;height:38px;border-radius:11px;background:var(--primary-50);color:var(--primary);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.row .rc{flex:1}
+.row .rk{font-size:13px;color:var(--ink-3)}
+.row .rv{font-size:var(--fs-body);font-weight:600;color:var(--ink)}
+.desc{background:var(--surface);margin:0 14px 14px;border-radius:var(--r-card);padding:16px;box-shadow:var(--sh-sm)}
+.desc h3{margin:0 0 8px;font-size:var(--fs-h2);color:var(--ink)}
+.desc p{margin:0;font-size:var(--fs-body);color:var(--ink-2);line-height:1.7}
+.anti{margin:0 14px 14px;background:var(--warn-50);border-radius:var(--r-card);padding:14px 16px;display:flex;gap:10px;align-items:flex-start}
+.anti svg{color:var(--warn);flex:0 0 auto;margin-top:2px}
+.anti .at{font-size:14px;color:var(--warn);line-height:1.6}
+.actions{display:flex;gap:12px;padding:6px 14px 18px}
+.btn{flex:1;height:56px;border-radius:var(--r-btn);border:none;cursor:pointer;font-size:var(--fs-h2);font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn.ghost{background:var(--surface);color:var(--primary);border:1.5px solid var(--primary)}
+.btn.solid{background:var(--accent);color:#fff}
+.btn:active{filter:brightness(.95)}
+
+/* 报名列表 */
+.bk-seg{display:flex;gap:10px;padding:4px 14px 2px}
+.bk-seg .rseg{flex:1;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:12px 4px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700}
+.bk-seg .rseg.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+.bstat{font-size:13px;font-weight:700;padding:5px 11px;border-radius:var(--r-pill)}
+.bstat.pending{background:var(--accent-50);color:var(--accent-d)}
+.bstat.done{background:var(--surface-2);color:var(--ink-3)}
+.bstat.canceled{background:#F3E4E1;color:var(--danger)}
+.btime{font-size:13px;color:var(--ink-3)}
+.bbtn{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);font-size:13px;font-weight:700;padding:8px 14px;border-radius:10px;cursor:pointer}
+.bbtn:active{background:var(--surface-2)}
+
+/* 焦点可达 */
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* 设计说明侧栏 */
+.side{width:340px;max-width:100%;background:var(--surface);border-radius:20px;padding:22px;box-shadow:0 12px 40px rgba(0,0,0,.12);color:var(--ink)}
+.side h2{margin:0 0 4px;font-size:20px;color:var(--primary)}
+.side p.s{font-size:13px;color:var(--ink-3);margin:0 0 16px}
+.side .tok{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 16px}
+.side .sw{width:34px;height:34px;border-radius:9px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.side h4{margin:18px 0 8px;font-size:14px;color:var(--ink-2);text-transform:uppercase;letter-spacing:1px}
+.side ul{margin:0;padding-left:18px;font-size:13px;line-height:1.9;color:var(--ink-2)}
+.side .pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-50);color:var(--primary);margin-right:6px}
+</style>
+</head>
+<body>
+
+<!-- ===================== 手机原型 ===================== -->
+<div class="phone">
+  <header id="appbar"></header>
+  <main id="view"></main>
+  <nav id="tabbar"></nav>
+</div>
+
+<!-- ===================== 设计说明 ===================== -->
+<aside class="side">
+  <h2>老友 old-buddy · UI 重设计</h2>
+  <p class="s">2026-09-03 · 统一线性图标系统 + 精炼信息层级 · 适老可达</p>
+
+  <h4>色彩令牌</h4>
+  <div class="tok">
+    <div class="sw" style="background:#F4EFE4" title="暖米底"></div>
+    <div class="sw" style="background:#0E6E6E" title="信任深青"></div>
+    <div class="sw" style="background:#0A5454" title="深青暗"></div>
+    <div class="sw" style="background:#E8743B" title="暖橙行动"></div>
+    <div class="sw" style="background:#2E7D5B" title="免费绿"></div>
+    <div class="sw" style="background:#B45309" title="防骗琥珀"></div>
+  </div>
+
+  <h4>图标系统规范</h4>
+  <ul>
+    <li>24×24 视图框，<b>2px 圆角描边</b>，stroke-linecap 圆头</li>
+    <li>全部使用 <span class="pill">currentColor</span>，随文字色自适应（深青/白/暖橙）</li>
+    <li>同一套图标同时导出 <b>内联 SVG</b>（网页）与 <b>PNG</b>（小程序 tabBar / 企业微信）</li>
+    <li>零 emoji，无渐变填充，统一视觉重量</li>
+  </ul>
+
+  <h4>本次改动</h4>
+  <ul>
+    <li>重画 tabBar 三图标（定位/书本/人像）更圆润易识别</li>
+    <li>企业微信不显示的图标 → 改用 <b>本地 PNG</b> 替换 data-URI 背景</li>
+    <li>「X 场」改为深青实底白字，与品牌统一</li>
+    <li>Hero 压缩为两行，首屏直接见活动卡片</li>
+    <li>触区 ≥44px、正文 ≥16px、对比度达 WCAG AA</li>
+  </ul>
+  <p class="s" style="margin-top:16px">点击原型内卡片 / 筛选 / 报名 可交互预览。</p>
+</aside>
+
+<div id="dialog-root"></div>
+
+<script>
+/* ---------- 统一图标库（线性 SVG，currentColor） ---------- */
+const ICONS = {
+  pin:'<path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/>',
+  book:'<path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 4v14a2 2 0 0 0 2 2"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>',
+  sliders:'<path d="M4 7h11M19 7h1M4 17h1M9 17h11"/><circle cx="17" cy="7" r="2.2"/><circle cx="7" cy="17" r="2.2"/>',
+  cal:'<rect x="4" y="5" width="16" height="16" rx="3"/><path d="M4 9h16M8 3v4M16 3v4"/><path d="M9 14h6M9 17h4"/>',
+  bookmark:'<path d="M7 4h10a1 1 0 0 1 1 1v15l-6-4-6 4V5a1 1 0 0 1 1-1z"/>',
+  bell:'<path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6z"/><path d="M10 19a2 2 0 0 0 4 0"/>',
+  settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 13a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+  chevron:'<path d="M9 6l6 6-6 6"/>',
+  chevL:'<path d="M15 6l-6 6 6 6"/>',
+  heart:'<path d="M12 20s-7-4.6-9.3-9C1.2 8 3.4 4.5 7 4.5c2.4 0 3.9 1.5 5 3 1.1-1.5 2.6-3 5-3 3.6 0 5.8 3.5 4.3 6.5C19 15.4 12 20 12 20z"/>',
+  check:'<path d="M5 13l4 4L19 7"/>',
+  shield:'<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M12 9v4M12 16h.01"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  map:'<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>',
+  phone:'<path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+  users:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5"/><path d="M16 5a3 3 0 0 1 0 6M21 20c0-2.5-1.5-4-4-4.5"/>',
+  ticket:'<path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2 2 2 0 0 0 0 4 2 2 0 0 1-2 2H6a2 2 0 0 1-2-2 2 2 0 0 0 0-4z"/><path d="M13 6v12" stroke-dasharray="2 2"/>',
+  star:'<path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9 6.8 19.2l1-5.8-4.3-4.1 5.9-.9z"/>',
+  x:'<path d="M6 6l12 12M18 6L6 18"/>'
+};
+function svg(name, cls){ return '<svg class="svg '+(cls||'')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(ICONS[name]||'')+'</svg>'; }
+
+/* ---------- 演示数据 ---------- */
+const ACTIVITIES = [
+  {id:'a1', type:'文艺', title:'社区合唱团每周排练', venue:'南京东路社区文化中心', addr:'黄浦区南京东路', dist:0.4, time:'周三 14:00', fee:'免费', signup:'现场登记'},
+  {id:'a2', type:'学习', title:'智能手机摄影入门课', venue:'黄浦区图书馆', addr:'黄浦区福州路', dist:0.8, time:'周五 09:30', fee:'免费', signup:'公众号预约'},
+  {id:'a3', type:'便民', title:'免费便民理发服务', venue:'外滩街道睦邻点', addr:'黄浦区中山东一路', dist:0.6, time:'周六 09:00', fee:'免费', signup:'现场排队'},
+  {id:'a4', type:'市集', title:'老字号年货市集', venue:'人民广场下沉广场', addr:'黄浦区人民大道', dist:1.1, time:'周日 10:00', fee:'免费入场', signup:'免预约'},
+  {id:'a5', type:'文艺', title:'沪剧折子戏赏析', venue:'长江剧场', addr:'黄浦区黄河路', dist:1.4, time:'周四 19:00', fee:'¥30', signup:'大麦网'},
+  {id:'a6', type:'运动', title:'社区太极拳晨练', venue:'人民公园', addr:'黄浦区南京西路', dist:0.9, time:'每日 07:00', fee:'免费', signup:'现场加入'},
+];
+const COURSES = [
+  {id:'c1', title:'书法基础·老年大学春季班', venue:'上海老年大学黄浦分校', dist:0.7, weeks:'12 周', start:'9月15日开班', seats:'剩 5 席', deadline:'9月10日截止', fee:'¥200/学期'},
+  {id:'c2', title:'智能手机与防诈骗课', venue:'外滩街道社区学校', dist:0.5, weeks:'6 周', start:'9月12日开班', seats:'剩 12 席', deadline:'9月8日截止', fee:'免费'},
+  {id:'c3', title:'沪语文化兴趣班', venue:'黄浦区文化馆', dist:1.2, weeks:'8 周', start:'9月20日开班', seats:'剩 3 席', deadline:'9月14日截止', fee:'¥120'},
+  {id:'c4', title:'太极拳·杨氏二十四式', venue:'人民公园晨练角', dist:0.9, weeks:'10 周', start:'9月18日开班', seats:'剩 8 席', deadline:'9月12日截止', fee:'免费'},
+];
+const CATEGORIES = [
+  {key:'all',label:'全部'},{key:'文艺',label:'文艺'},{key:'学习',label:'学习'},{key:'运动',label:'运动'},
+  {key:'便民',label:'便民'},{key:'市集',label:'市集'},{key:'公益',label:'公益'}
+];
+const RADII = [1,3,5,10];
+
+/* ---------- 状态 ---------- */
+const state = { tab:'home', radius:1, category:'all', locName:'人民广场', favs:{}, bookings:{'c2':{status:'pending'}}, detail:null, filter:false };
+
+/* ---------- 渲染 ---------- */
+const view = document.getElementById('view');
+const appbar = document.getElementById('appbar');
+const tabbar = document.getElementById('tabbar');
+const dlg = document.getElementById('dialog-root');
+
+function appbarHTML(){
+  if(state.tab==='home'){
+    return '<div class="brand"><span class="logo">'+svg('pin','sm')+'</span>老友时光</div>'+
+      '<div class="tools"><button class="tool" title="搜索">'+svg('search')+'</button><button class="tool" title="通知">'+svg('bell')+'</button></div>';
+  }
+  const titles={courses:'课程',me:'我的'};
+  return '<button class="tool" style="margin-right:auto" onclick="go(\'home\')">'+svg('chevL')+'</button>'+
+    '<div class="brand" style="position:absolute;left:50%;transform:translateX(-50%)">'+titles[state.tab]+'</div>'+
+    (state.tab==='me'?'<div class="tools" style="margin-left:auto"><button class="tool">'+svg('settings')+'</button></div>':'');
+}
+function tabbarHTML(){
+  const tabs=[{k:'home',label:'附近',icon:'pin'},{k:'courses',label:'课程',icon:'book'},{k:'me',label:'我的',icon:'user'}];
+  return tabs.map(t=>'<button class="tab '+(state.tab===t.k?'on':'')+'" onclick="go(\''+t.k+'\')">'+
+    svg(t.icon)+(state.tab===t.k?svg(t.icon):svg(t.icon))+'<span class="lab">'+t.label+'</span></button>').join('');
+}
+function homeHTML(){
+  const list = ACTIVITIES.filter(a=>a.dist<=state.radius && (state.category==='all'||a.type===state.category));
+  const cards = list.length? list.map(cardHTML).join('') :
+    '<div class="empty"><div class="eico">'+svg('search','lg')+'</div>附近 '+state.radius+'km 本周暂无活动，换个半径或稍后再来看看。</div>';
+  return '<div class="hero"><div class="greet">'+greet()+'，'+esc(state.locName)+'的老朋友</div>'+
+    '<div class="sub">附近的单次活动，按离您的距离由近到远</div></div>'+
+    '<div class="filter-bar"><div class="fsum">'+
+      '<button class="fpill loc" onclick="relocate()">'+svg('pin','sm')+'<span>'+esc(state.locName)+'</span></button>'+
+      '<span class="fpill">'+state.radius+'km</span>'+
+      '<span class="fpill">'+catLabel()+'</span>'+
+      '<span class="fpill fcount">'+list.length+' 场</span>'+
+    '</div><button class="filter-btn" onclick="openFilter()">'+svg('sliders','sm')+' 筛选</button></div>'+
+    '<div class="sec-title"><span class="bar"></span>附近 · 本周活动</div>'+
+    '<div class="hint">共 '+list.length+' 场，点卡片看详情、收藏或报名</div>'+
+    '<div class="feed">'+cards+'</div>'+
+    '<div class="src-note">活动由 AI 自动聚合上海公共文化资源（演示数据）<br/>真实环境接入上海公共开放数据 + 高德地理编码</div>';
+}
+function cardHTML(a){
+  const fav = state.favs[a.id];
+  return '<div class="card" onclick="openDetail(\''+a.id+'\')">'+
+    '<div class="top"><span class="tag">'+svg('star','sm')+a.type+'</span>'+
+      '<button class="fav '+(fav?'on':'')+'" onclick="event.stopPropagation();toggleFav(\''+a.id+'\')">'+svg('heart','sm')+'</button></div>'+
+    '<div class="ttl">'+a.title+'</div>'+
+    '<div class="meta">'+svg('map','sm')+'<span>'+a.venue+'</span><span class="dist">'+a.dist+'km</span></div>'+
+    '<div class="meta">'+svg('clock','sm')+'<span>'+a.time+'</span></div>'+
+    '<span class="fee '+(a.fee==='免费'||a.fee==='免费入场'?'free':'paid')+'">'+a.fee+'</span></div>';
+}
+function coursesHTML(){
+  const cards = COURSES.map(c=>'<div class="card" onclick="openDetail(\''+c.id+'\')">'+
+    '<div class="top"><span class="kind-badge">'+svg('book','sm')+'长期课</span>'+
+      (state.bookings[c.id]?'<span class="booked-flag">'+svg('check','sm')+'已报名</span>':'')+'</div>'+
+    '<div class="ttl">'+c.title+'</div>'+
+    '<div class="meta">'+svg('map','sm')+'<span>'+c.venue+'</span><span class="dist">'+c.dist+'km</span></div>'+
+    '<div class="cfoot"><span class="seats">'+svg('users','sm')+c.seats+'</span><span class="deadline">'+c.deadline+'</span></div>'+
+    '<span class="fee '+(c.fee==='免费'?'free':'paid')+'">'+c.fee+'</span></div>').join('');
+  return '<div class="courses-hero"><div class="ch-title">'+svg('book')+'课程 · 长期班</div>'+
+    '<div class="ch-sub">老年大学 / 社区学校 / 文化馆的固定课时班，需报名入学，全城不限半径。</div></div>'+
+    '<div class="sec-title"><span class="bar"></span>为您推荐</div>'+
+    '<div class="feed">'+cards+'</div>'+
+    '<div class="src-note">课程数据由 AI 聚合（演示）</div>';
+}
+function meHTML(){
+  const bk = Object.keys(state.bookings).length;
+  const fv = Object.keys(state.favs).length;
+  return '<div class="profile"><div class="avatar">'+svg('user','lg')+'</div>'+
+    '<div><div class="pn">王阿姨</div><div class="ps">上海 · 退休生活家</div></div></div>'+
+    '<div class="list">'+
+      '<div class="item" onclick="openBookings()"><div class="ii">'+svg('ticket')+'</div><div class="it">我的报名</div><div class="iv">'+bk+' 个</div>'+svg('chevron')+'</div>'+
+      '<div class="item"><div class="ii">'+svg('bookmark')+'</div><div class="it">我的收藏</div><div class="iv">'+fv+' 个</div>'+svg('chevron')+'</div>'+
+      '<div class="item"><div class="ii">'+svg('bell')+'</div><div class="it">活动提醒</div><div class="switch on"></div></div>'+
+      '<div class="item"><div class="ii">'+svg('settings')+'</div><div class="it">大字模式</div><div class="switch"></div></div>'+
+    '</div>'+
+    '<div class="list"><div class="item"><div class="ii">'+svg('shield')+'</div><div class="it">防诈骗指南</div>'+svg('chevron')+'</div>'+
+      '<div class="item"><div class="ii">'+svg('phone')+'</div><div class="it">联系子女 / 客服</div>'+svg('chevron')+'</div></div>';
+}
+function render(){
+  appbar.innerHTML = appbarHTML();
+  tabbar.innerHTML = tabbarHTML();
+  if(state.tab==='home') view.innerHTML = homeHTML();
+  else if(state.tab==='courses') view.innerHTML = coursesHTML();
+  else if(state.tab==='me') view.innerHTML = meHTML();
+}
+/* ---------- 交互 ---------- */
+function go(t){ state.tab=t; state.filter=false; dlg.innerHTML=''; render(); view.scrollTop=0; }
+function greet(){ const h=new Date().getHours(); if(h<11)return'早上好'; if(h<18)return'下午好'; return'晚上好'; }
+function esc(s){ return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function catLabel(){ return state.category==='all'?'全部':(CATEGORIES.find(c=>c.key===state.category)||{}).label; }
+function relocate(){ toast('已定位到 '+state.locName+'（演示）'); }
+function toggleFav(id){ state.favs[id]=!state.favs[id]; render(); }
+function openFilter(){
+  const radii = RADII.map(r=>'<button class="chip '+(r===state.radius?'on':'')+'" onclick="setR('+r+')">'+r+'km</button>').join('');
+  const cats = CATEGORIES.map(c=>'<button class="chip '+(c.key===state.category?'on':'')+'" onclick="setC(\''+c.key+'\')">'+c.label+'</button>').join('');
+  dlg.innerHTML = '<div class="sheet-overlay" onclick="if(event.target===this)closeDlg()"><div class="sheet">'+
+    '<div class="sheet-handle"></div><div class="sheet-title">筛选</div>'+
+    '<div class="sheet-sec"><div class="ss-label">距离（默认 1km）</div><div class="chips">'+radii+'</div></div>'+
+    '<div class="sheet-sec"><div class="ss-label">分类</div><div class="chips">'+cats+'</div></div>'+
+    '<div class="sheet-acts"><button class="sbtn reset" onclick="resetFilter()">重置</button>'+
+      '<button class="sbtn ok" onclick="closeDlg()">查看结果</button></div></div></div>';
+}
+function setR(r){ state.radius=r; openFilter(); }
+function setC(c){ state.category=c; openFilter(); }
+function resetFilter(){ state.radius=1; state.category='all'; openFilter(); }
+function openDetail(id){
+  const a = ACTIVITIES.find(x=>x.id===id) || COURSES.find(x=>x.id===id);
+  const isCourse = !!COURSES.find(x=>x.id===id);
+  const booked = state.bookings[id];
+  const rows = isCourse ?
+    row('cal','课时',a.weeks)+row('clock','开班',a.start)+row('users','名额',a.seats)+row('shield','截止',a.deadline)+row('ticket','费用',a.fee)
+    : row('map','地点',a.venue+'（'+a.addr+'）')+row('clock','时间',a.time)+row('ticket','费用',a.fee)+row('bell','报名',a.signup);
+  dlg.innerHTML = '<div class="sheet-overlay" onclick="if(event.target===this)closeDlg()"><div class="detail">'+
+    '<div class="detail-hero"><span class="dtype">'+(isCourse?svg('book')+'长期课':svg('star')+a.type)+'</span>'+
+      '<div class="dtitle">'+a.title+'</div><div class="ddist">'+svg('pin','sm')+' '+a.dist+'km · '+a.venue+'</div></div>'+
+    '<div class="detail-body"><div class="panel">'+rows+'</div>'+
+      '<div class="desc"><h3>活动介绍</h3><p>这是一场专为社区长者准备'+(isCourse?'的长期学习课程':'的公益活动')+'，由 '+a.venue+' 组织，欢迎结伴参加，现场有志愿者协助。</p></div>'+
+      '<div class="anti">'+svg('shield')+'<div class="at">防诈骗提示：本平台活动均免费或明示收费，绝不要求转账到个人账户。如遇要钱请立即联系子女或拨打 96110。</div></div>'+
+      '<div class="actions">'+
+        (isCourse? '<button class="btn ghost" onclick="toggleFav(\''+id+'\')">'+svg('heart','sm')+'收藏</button>'+
+          (booked?'<button class="btn solid" onclick="toast(\'您已报名，可在「我的报名」查看\')">'+svg('check')+'已报名</button>'
+                 :'<button class="btn solid" onclick="book(\''+id+'\')">'+svg('ticket')+'我要报名</button>')
+        : '<button class="btn ghost" onclick="toggleFav(\''+id+'\')">'+svg('heart','sm')+'收藏</button>'+
+          '<button class="btn solid" onclick="toast(\'已记录，活动当天提醒您\')">'+svg('bell','sm')+'提醒我</button>')+
+      '</div></div></div></div>';
+}
+function row(ic,k,v){ return '<div class="row"><div class="ric">'+svg(ic)+'</div><div class="rc"><div class="rk">'+k+'</div><div class="rv">'+v+'</div></div></div>'; }
+function book(id){ state.bookings[id]={status:'pending'}; closeDlg(); render(); toast('报名成功！可在「我的 → 我的报名」查看'); }
+function openBookings(){
+  const ids = Object.keys(state.bookings);
+  const cards = ids.map(id=>{ const c=COURSES.find(x=>x.id===id); const b=state.bookings[id];
+    return '<div class="card"><div class="top"><span class="kind-badge">'+svg('book','sm')+'长期课</span>'+
+      '<span class="bstat '+b.status+'">'+(b.status==='pending'?'待参加':'已完成')+'</span></div>'+
+      '<div class="ttl">'+c.title+'</div>'+
+      '<div class="meta">'+svg('clock','sm')+'<span>'+c.start+'</span></div>'+
+      '<div class="bkfoot"><span class="btime">报名于 9月3日</span>'+
+      (b.status==='pending'?'<button class="bbtn" onclick="cancelBk(\''+id+'\')">取消报名</button>':'')+'</div></div>';
+  }).join('') || '<div class="empty"><div class="eico">'+svg('ticket','lg')+'</div>还没有报名记录，去「课程」页看看吧。</div>';
+  dlg.innerHTML = '<div class="sheet-overlay" onclick="if(event.target===this)closeDlg()"><div class="detail">'+
+    '<div class="detail-hero"><span class="dtype">'+svg('ticket')+'我的报名</span><div class="dtitle">共 '+ids.length+' 个</div></div>'+
+    '<div class="detail-body"><div class="feed" style="padding:14px">'+cards+'</div>'+
+    '<div class="anti">'+svg('shield')+'<div class="at">防诈骗提示：任何课程若要求私下转账，均为诈骗。</div></div></div></div></div>';
+}
+function cancelBk(id){ delete state.bookings[id]; openBookings(); render(); }
+function closeDlg(){ dlg.innerHTML=''; }
+let toastT; function toast(m){ const old=document.querySelector('.toast'); if(old)old.remove();
+  const t=document.createElement('div'); t.className='toast'; t.textContent=m;
+  t.style.cssText='position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(31,42,43,.94);color:#fff;padding:10px 18px;border-radius:12px;font-size:14px;z-index:99;box-shadow:0 6px 20px rgba(0,0,0,.3)';
+  document.body.appendChild(t); clearTimeout(toastT); toastT=setTimeout(()=>t.remove(),1800); }
+
+render();
+</script>
+</body>
+</html>

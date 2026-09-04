@@ -1,0 +1,53 @@
+.page { padding-bottom: 32rpx; }
+
+.chero {
+  margin: 0; padding: 40rpx 32rpx 32rpx;
+  background: linear-gradient(135deg, var(--primary), var(--primary-d));
+  color: #fff; border-radius: 0 0 32rpx 32rpx;
+}
+.chero .ch-title { display: flex; align-items: center; gap: 10rpx; font-size: 42rpx; font-weight: 800; }
+.chero .ch-title .i-bookOpen { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2724%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27%2523FFFFFF%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%22M2%203h6a4%204%200%200%201%204%204v14a3%203%200%200%200-3-3H2z%22%2F%3E%3Cpath%20d%3D%22M22%203h-6a4%204%200%200%200-4%204v14a3%203%200%200%201%203-3h7z%22%2F%3E%3C%2Fsvg%3E"); }
+.chero .ch-sub { font-size: 26rpx; opacity: .9; margin-top: 14rpx; line-height: 1.6; white-space: pre-line; }
+
+.chips { white-space: nowrap; padding: 24rpx 32rpx 4rpx; }
+.chip {
+  display: inline-block; margin-right: 18rpx; padding: 16rpx 32rpx; border-radius: var(--r-pill);
+  background: var(--surface); color: var(--ink-2); font-size: 30rpx; font-weight: 700;
+  border: 2rpx solid var(--line);
+}
+.chip.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+.sec-title { display: flex; align-items: center; gap: 12rpx; margin: 20rpx 32rpx 0; font-size: 34rpx; font-weight: 800; color: var(--ink); }
+.sec-title .bar { width: 10rpx; height: 34rpx; border-radius: 6rpx; background: var(--primary); }
+.hint { margin: 8rpx 32rpx 16rpx; font-size: 26rpx; color: var(--ink-3); }
+
+.feed { padding: 8rpx 24rpx; }
+
+.card {
+  background: var(--surface); border-radius: var(--r-card); padding: 28rpx;
+  margin-bottom: 22rpx; box-shadow: 0 4rpx 18rpx rgba(20,45,45,.07);
+}
+.card.course .c-top { display: flex; align-items: center; justify-content: space-between; }
+.kind-badge {
+  font-size: 24rpx; font-weight: 700; color: var(--primary-d);
+  background: var(--primary-soft); padding: 6rpx 18rpx; border-radius: var(--r-pill);
+}
+.card .ttl { font-size: 36rpx; font-weight: 800; color: var(--ink); margin: 16rpx 0 14rpx; line-height: 1.4; }
+.card .meta { display: flex; align-items: center; gap: 12rpx; font-size: 28rpx; color: var(--ink-2); margin-top: 10rpx; }
+.card .meta .dist { color: var(--primary-d); font-weight: 700; }
+.card .cfoot { display: flex; align-items: center; justify-content: space-between; gap: 12rpx; margin-top: 14rpx; }
+.card .seats { display: inline-flex; align-items: center; gap: 8rpx; font-size: 26rpx; font-weight: 700; color: var(--primary-d); }
+.card .deadline { font-size: 26rpx; color: var(--ink-3); }
+.card .fee { display: inline-block; margin-top: 16rpx; font-size: 26rpx; font-weight: 700; padding: 8rpx 20rpx; border-radius: var(--r-pill); }
+.card .fee.free { background: var(--free-soft); color: var(--free); }
+.card .fee.paid { background: var(--accent-soft); color: var(--accent-d); }
+.booked-flag { display: inline-flex; align-items: center; gap: 6rpx; margin-top: 14rpx; font-size: 26rpx; font-weight: 700; color: var(--free); background: var(--free-soft); padding: 8rpx 18rpx; border-radius: var(--r-pill); }
+
+.empty { text-align: center; padding: 80rpx 20rpx; color: var(--ink-3); font-size: 28rpx; }
+.empty .eico { margin-bottom: 16rpx; }
+.src-note { margin: 16rpx 32rpx 8rpx; font-size: 24rpx; color: var(--ink-3); line-height: 1.7; text-align: center; }
+
+.big .ttl { font-size: 42rpx; }
+.big .meta { font-size: 32rpx; }
+.big .chip { font-size: 32rpx; }
+.big .ch-title { font-size: 48rpx; }
