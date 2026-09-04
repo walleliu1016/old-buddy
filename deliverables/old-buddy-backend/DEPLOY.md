@@ -11,7 +11,7 @@
 ┌──────────────┐    wx.cloud.callFunction     ┌─────────────────────────┐
 │  微信小程序   │ ───────────────────────────▶ │  微信云开发 CloudBase    │
 │ (退休人员端)  │                              │  ├ 云数据库 (10 集合)     │
-│              │ ◀─────────────────────────── │  ├ 云函数 (11 个)        │
+│              │ ◀─────────────────────────── │  ├ 云函数 (12 个)        │
 └──────────────┘   活动/报名/收藏/用户/反馈    │  └ 云存储 (图片/语音)     │
                                                 └───────────┬─────────────┘
                                                             │ 定时/自愈调 sync
@@ -88,10 +88,13 @@ curl "http://localhost:8800/api/v1/activities?limit=20"
 | messages | `userId` + `sendAt` | 普通 |
 | ai_summaries | `scope` + `scopeKey` + `period` | 普通 |
 
-### 4.3 上传云函数（11 个）
+### 4.3 上传云函数（12 个）
 
 小程序根目录 `cloudfunctions/` 下右键「上传并部署：云端安装依赖」：
-`login, activities, booking, favorite, user, feedback, message, sync, pay, setup`
+`login, activities, booking, favorite, user, feedback, message, sync, pay, setup, publish`
+
+> **publish 权限**：该函数调用了 `security.msgSecCheck`，需在 mp 后台开通「内容安全」接口权限；
+> 云函数依赖 `wx-server-sdk` 自带 openapi，无需额外安装。
 
 ### 4.4 配置云函数环境变量（云开发 → 云函数 → 对应函数 → 配置 → 环境变量）
 
@@ -184,9 +187,9 @@ deliverables/
 │  ├─ config.js                        ← 改这里启用云开发
 │  ├─ app.js                          云初始化 + 静默登录 + 报名云端同步
 │  └─ services/{cloud.js, activity.js} 云函数调用层 / 路由（页面零改动）
-├─ cloudfunctions/                     11 个云函数（各带 package.json）
+├─ cloudfunctions/                     12 个云函数（各带 package.json）
 │  ├─ login activities booking favorite user feedback message
-│  ├─ sync(+config.json 定时) pay setup
+│  ├─ sync(+config.json 定时) pay setup publish
 └─ old-buddy-backend/
    ├─ DESIGN.md  总体架构 + 数据模型 + 微信对接 + 上线清单
    ├─ API.md     全量接口规范（含前端迁移映射）

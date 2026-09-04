@@ -1,0 +1,105 @@
+<view class="page {{bigFont?'big':''}}">
+  <!-- 顶部双 tab -->
+  <view class="tabs">
+    <view class="t {{tab==='post'?'on':''}}" bindtap="onTapTab" data-tab="post">发布</view>
+    <view class="t {{tab==='mine'?'on':''}}" bindtap="onTapTab" data-tab="mine">我发布的</view>
+  </view>
+
+  <!-- ===== 发布表单 ===== -->
+  <block wx:if="{{tab==='post'}}">
+    <view wx:if="{{!isCloud}}" class="cloud-tip">尚未连接云端，发布内容先保存在本机；开通云开发后自动上传。</view>
+
+    <view class="form">
+      <view class="f-item">
+        <view class="f-label">活动名称<text class="req">*</text></view>
+        <input class="f-input" placeholder="例：周日晨练太极小组" placeholder-class="ph"
+               value="{{title}}" bindinput="onTitle" maxlength="30" />
+      </view>
+
+      <view class="f-item">
+        <view class="f-label">分类</view>
+        <view class="chips">
+          <view wx:for="{{cats}}" wx:key="*this" class="chip {{item===cat?'on':''}}"
+                bindtap="pickCat" data-cat="{{item}}">{{item}}</view>
+        </view>
+      </view>
+
+      <view class="f-item">
+        <view class="f-label">活动时间<text class="req">*</text></view>
+        <view class="duo">
+          <picker mode="date" start="{{minDate}}" value="{{date}}" bindchange="onDate">
+            <view class="picker">{{date || "选日期"}}</view>
+          </picker>
+          <picker mode="time" value="{{time}}" bindchange="onTime">
+            <view class="picker">{{time || "选时间"}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="f-item">
+        <view class="f-label">地点名称<text class="req">*</text></view>
+        <input class="f-input" placeholder="例：社区活动室 / 公园东门" placeholder-class="ph"
+               value="{{venue}}" bindinput="onVenue" maxlength="20" />
+      </view>
+      <view class="f-item">
+        <view class="f-label">详细地址<text class="req">*</text></view>
+        <input class="f-input" placeholder="例：XX路XX号" placeholder-class="ph"
+               value="{{address}}" bindinput="onAddress" maxlength="40" />
+      </view>
+
+      <view class="f-item">
+        <view class="f-label">费用</view>
+        <view class="chips">
+          <view class="chip {{feeMode==='free'?'on':''}}" bindtap="pickFee" data-m="free">免费</view>
+          <view class="chip {{feeMode==='paid'?'on':''}}" bindtap="pickFee" data-m="paid">收费</view>
+        </view>
+        <input wx:if="{{feeMode==='paid'}}" class="f-input mt" type="digit" placeholder="每人金额（元）"
+               placeholder-class="ph" value="{{price}}" bindinput="onPrice" />
+      </view>
+
+      <view class="f-item">
+        <view class="f-label">人数上限（选填）</view>
+        <input class="f-input" type="number" placeholder="不限就不填" placeholder-class="ph"
+               value="{{capacity}}" bindinput="onCapacity" />
+      </view>
+
+      <view class="f-item">
+        <view class="f-label">活动说明（选填）</view>
+        <textarea class="f-area" placeholder="说说做什么、要带什么、注意事项…" placeholder-class="ph"
+                  value="{{desc}}" bindinput="onDesc" maxlength="200" />
+      </view>
+
+      <view class="f-item">
+        <view class="f-label">联系电话（选填）</view>
+        <input class="f-input" type="number" placeholder="方便大家联系您" placeholder-class="ph"
+               value="{{contact}}" bindinput="onContact" maxlength="11" />
+      </view>
+    </view>
+
+    <view class="safe-bottom">
+      <button class="btn solid submit" loading="{{submitting}}" bindtap="onSubmit">发布活动</button>
+      <view class="audit-note">发布前会自动检查文字内容，请勿填写联系方式之外的个人隐私。</view>
+    </view>
+  </block>
+
+  <!-- ===== 我发布的 ===== -->
+  <block wx:else>
+    <view wx:if="{{mine.length===0 && mineLoaded}}" class="empty">
+      还没有发布过活动，去「发布」里发一个吧。
+    </view>
+    <view class="plist">
+      <view class="pcard" wx:for="{{mine}}" wx:key="id">
+        <view class="p-head">
+          <text class="p-title">{{item.title}}</text>
+          <text class="p-status {{item.status==='已发布'?'ok':''}}">{{item.status}}</text>
+        </view>
+        <view class="p-meta">{{item.timeText}} · {{item.venue}}</view>
+        <view class="p-meta">分类：{{item.category}} · {{item.fee}}</view>
+        <view class="p-acts">
+          <view class="pbtn off" bindtap="onOffline" data-id="{{item.id}}"
+                wx:if="{{item.status!=='已下架'}}">删除</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

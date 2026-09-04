@@ -1,4 +1,18 @@
 .page { padding-bottom: 24rpx; }
+
+/* 发布 FAB（悬浮于 tabBar 之上，弹层之下） */
+.fab {
+  position: fixed; right: 32rpx;
+  bottom: calc(env(safe-area-inset-bottom) + 140rpx);
+  z-index: 50;
+  height: 88rpx; padding: 0 36rpx; border-radius: var(--r-pill);
+  background: var(--accent); color: #fff;
+  display: flex; align-items: center; gap: 10rpx;
+  font-size: 32rpx; font-weight: 700;
+  box-shadow: 0 10rpx 28rpx rgba(207, 94, 39, .38);
+}
+.fab-plus { font-size: 38rpx; font-weight: 800; }
+
 .hero {
   margin: 24rpx 24rpx 6rpx;
   background: linear-gradient(135deg, var(--primary), var(--primary-d));

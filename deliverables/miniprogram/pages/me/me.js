@@ -20,6 +20,8 @@ Page({
 
   onBookings() { wx.navigateTo({ url: "/pages/bookings/bookings" }); },
 
+  onMyPosts() { wx.navigateTo({ url: "/pages/publish/publish?tab=mine" }); },
+
   onToggleFont() {
     const nf = !app.globalData.settings.bigFont;
     app.setSetting("bigFont", nf);

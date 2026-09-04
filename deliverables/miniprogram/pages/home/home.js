@@ -107,5 +107,7 @@ Page({
     locationSrv.getLocation().then((loc) => { app.setLocation(loc); this.load(); wx.showToast({ title: "已定位", icon: "none" }); })
       .catch(() => wx.showToast({ title: "定位未授权", icon: "none" }));
   },
-  onRefresh() { this.load(); wx.showToast({ title: "已刷新", icon: "none" }); }
+  onRefresh() { this.load(); wx.showToast({ title: "已刷新", icon: "none" }); },
+
+  goPublish() { wx.navigateTo({ url: "/pages/publish/publish" }); }
 });

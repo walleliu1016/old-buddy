@@ -25,6 +25,9 @@
   </view>
   <view class="src-note">「附近」只收单次活动（讲座 / 演出 / 展览 / 市集 / 便民）。<br/>需要报名入学的长期课，请看底部「课程」。</view>
 
+  <!-- 发布入口 -->
+  <view class="fab" bindtap="goPublish"><text class="fab-plus">＋</text><text>发布</text></view>
+
   <view wx:if="{{showFilter}}" class="sheet-overlay" bindtap="closeFilter">
     <view class="sheet" catchtap="noop">
       <view class="sheet-handle"></view>

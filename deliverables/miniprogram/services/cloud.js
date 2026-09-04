@@ -90,6 +90,11 @@ module.exports = {
   feedback(payload) { return call('feedback', payload); },
   subscribe(templateId, type) { return call('message', { action: 'subscribe', templateId: templateId, type: type }); },
 
+  /* ---- 用户发布兴趣活动 ---- */
+  publishCreate(payload) { return call('publish', Object.assign({ action: 'create' }, payload)); },
+  publishMine() { return call('publish', { action: 'mine' }).then((d) => (d && d.list) || []); },
+  publishOffline(id) { return call('publish', { action: 'offline', id: id }); },
+
   /* ---- 运维 ---- */
   sync() { return call('sync', { action: 'run' }); }
 };

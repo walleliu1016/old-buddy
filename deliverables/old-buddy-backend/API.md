@@ -214,7 +214,35 @@
 
 ---
 
-## 9. 错误码
+## 9. 用户发布兴趣活动（云函数 `publish`）
+
+> 用户自助发布单次兴趣活动，写回 `activities` 集合（`source:"user"`、`kind:"once"`、`auditStatus:"pass"`），
+> 「附近」查询**零改动**即可混入按距离排序。发布前自动过 `msgSecCheck` 内容安全。
+
+### create —— 发布
+```json
+{ "action":"create", "title":"周日晨练太极小组", "category":"运动",
+  "timeText":"9月20日 14:00", "venue":"社区活动室", "address":"XX路XX号",
+  "lat":31.23, "lng":121.47, "price":0, "capacity":0,
+  "description":"自带水杯", "contact":"138****" }
+```
+- 必填：`title`(≥2字) / `timeText` / `venue` / `address`
+- `price` 分为单位（前端元×100）；0 = 免费
+- 返回 `{ "code":0, "data":{ "_id":"..." } }`
+- 错误：`403` 内容安全拦截；`422` 必填缺失
+
+### mine —— 我发布的
+**响应**：`{ "code":0, "data":{ "list":[...活动文档...] } }`，按 `createdAt` 倒序，上限 50。
+
+### offline —— 下架
+`{ "action":"offline", "id":"..." }` → `status:"offline"`（仅发布者本人可操作，否则 `404`）。
+
+**前端**：入口 = 附近页右下「＋ 发布」FAB + 我的页「我发布的」行；页面 `pages/publish/publish`
+（顶部双 tab：发布 / 我发布的）。未开通云开发时降级为本机暂存（`local_posts`）。
+
+---
+
+## 10. 错误码
 | code | 含义 |
 |---|---|
 | 0 | 成功 |

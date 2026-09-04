@@ -1,0 +1,66 @@
+/* pages/publish/publish.wxss — 复用全局 token，大控件适老化 */
+.page { padding: 24rpx 28rpx 160rpx; min-height: 100vh; }
+
+/* 顶部双 tab */
+.tabs { display: flex; gap: 16rpx; margin-bottom: 28rpx; }
+.t { flex: 1; height: 92rpx; border-radius: var(--r-btn);
+     display: flex; align-items: center; justify-content: center;
+     font-size: 34rpx; font-weight: 700;
+     background: var(--surface); color: var(--ink-2); border: 3rpx solid var(--line); }
+.t.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+.cloud-tip { background: var(--accent-soft); color: var(--accent-d);
+  border-radius: var(--r-card); padding: 20rpx 24rpx; font-size: 28rpx;
+  line-height: 1.5; margin-bottom: 24rpx; }
+
+/* 表单 */
+.form { background: var(--surface); border-radius: var(--r-card);
+  box-shadow: var(--sh); padding: 12rpx 28rpx; }
+.f-item { padding: 26rpx 0; border-bottom: 2rpx solid var(--line); }
+.f-item:last-child { border-bottom: none; }
+.f-label { font-size: 30rpx; font-weight: 700; color: var(--ink); margin-bottom: 16rpx; }
+.req { color: var(--primary); margin-left: 6rpx; }
+
+.f-input { height: 96rpx; background: var(--surface-2); border-radius: var(--r-btn);
+  padding: 0 28rpx; font-size: 32rpx; }
+.f-input.mt { margin-top: 16rpx; }
+.ph { color: var(--ink-3); }
+.f-area { width: 100%; min-height: 220rpx; background: var(--surface-2);
+  border-radius: var(--r-btn); padding: 24rpx 28rpx; font-size: 32rpx; line-height: 1.5; }
+
+.duo { display: flex; gap: 16rpx; }
+.picker { flex: 1; height: 96rpx; background: var(--surface-2); border-radius: var(--r-btn);
+  display: flex; align-items: center; padding: 0 28rpx; font-size: 32rpx; color: var(--ink); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.chip { padding: 18rpx 36rpx; border-radius: var(--r-pill); font-size: 30rpx;
+  background: var(--surface-2); color: var(--ink-2); border: 3rpx solid transparent; }
+.chip.on { background: var(--primary-soft); color: var(--primary);
+  border-color: var(--primary); font-weight: 700; }
+
+/* 提交区 */
+.safe-bottom { position: fixed; left: 0; right: 0; bottom: 0;
+  padding: 20rpx 28rpx calc(env(safe-area-inset-bottom) + 20rpx);
+  background: linear-gradient(transparent, var(--bg) 40%); }
+.submit { width: 100%; }
+.audit-note { text-align: center; font-size: 24rpx; color: var(--ink-3);
+  margin-top: 14rpx; line-height: 1.5; }
+
+/* 我发布的 */
+.empty { text-align: center; color: var(--ink-2); font-size: 30rpx;
+  padding: 120rpx 40rpx; line-height: 1.6; }
+.plist { display: flex; flex-direction: column; gap: 20rpx; }
+.pcard { background: var(--surface); border-radius: var(--r-card);
+  box-shadow: var(--sh); padding: 26rpx 28rpx; }
+.p-head { display: flex; justify-content: space-between; align-items: center; gap: 16rpx; }
+.p-title { font-size: 32rpx; font-weight: 700; color: var(--ink);
+  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.p-status { flex-shrink: 0; font-size: 24rpx; font-weight: 700;
+  padding: 6rpx 18rpx; border-radius: var(--r-pill);
+  background: var(--line); color: var(--ink-2); }
+.p-status.ok { background: var(--free-soft); color: var(--free); }
+.p-meta { font-size: 28rpx; color: var(--ink-2); margin-top: 12rpx; line-height: 1.5; }
+.p-acts { display: flex; justify-content: flex-end; margin-top: 16rpx; }
+.pbtn { font-size: 28rpx; font-weight: 700; padding: 14rpx 34rpx;
+  border-radius: var(--r-pill); }
+.pbtn.off { background: var(--primary-soft); color: var(--primary); }

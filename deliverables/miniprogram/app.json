@@ -4,17 +4,18 @@
     "pages/detail/detail",
     "pages/courses/courses",
     "pages/bookings/bookings",
-    "pages/me/me"
+    "pages/me/me",
+    "pages/publish/publish"
   ],
   "window": {
     "navigationBarTitleText": "老友时光",
-    "navigationBarBackgroundColor": "#0E6E6E",
+    "navigationBarBackgroundColor": "#C8472E",
     "navigationBarTextStyle": "white",
     "backgroundColor": "#F4EFE4"
   },
   "tabBar": {
     "color": "#8A9798",
-    "selectedColor": "#0E6E6E",
+    "selectedColor": "#C8472E",
     "backgroundColor": "#FFFFFF",
     "borderStyle": "white",
     "list": [
