@@ -131,14 +131,24 @@ curl "http://localhost:8800/api/v1/activities?limit=20"
 
 云托管（CloudBase Run）就是一个 Docker 容器托管服务，跑我们的 FastAPI 数据工厂：
 
-1. 微信开发者工具 → 顶部「云开发」→ 开通；再进「云托管」→ 新建服务，服务名如 `oldbuddy-factory`
+**控制台入口（任选其一）：**
+- 官网直达（PC）：https://cloud.weixin.qq.com/cloudrun/
+- 微信开发者工具 →「云开发」→ 设置 → 拓展功能 → 云托管
+- 小程序 mp 后台 → 开发 → 云服务 → 微信云托管 → 去使用
+
+> 登录前提：**小程序测试号 / 试用号无法登录云托管控制台**；第三方快速创建的小程序需先在 mp 后台绑定手机号。
+
+**部署步骤：**
+
+1. 用上面任一入口登录云托管控制台 → 开通（有免费体验额度，用尽后按量计费）→ 新建服务，服务名如 `oldbuddy-factory`
 2. 部署方式二选一：
    - **上传代码**：把 `old-buddy-backend/backend-pipeline/` 整个目录（含已备好的 `Dockerfile`）打包上传
-   - **绑定仓库**：服务设置里绑定本 GitHub 仓库，指定 `deliverables/old-buddy-backend/backend-pipeline` 为构建目录，后续 push 自动构建
+   - **绑定仓库**：服务设置里绑定本 GitHub 仓库，构建目录填 `deliverables/old-buddy-backend/backend-pipeline`，后续 push 自动构建
 3. 「服务设置 → 环境变量」注入：`SH_DATA_APP_KEY` / `AMAP_KEY` / `LLM_API_KEY`（可选，不填走种子数据）
-4. 「服务设置」确认监听端口 = **80**（本服务 Dockerfile 已按 80 配置）
-5. 云函数 `sync` 加环境变量：`FACTORY_SERVICE = oldbuddy-factory`
-6. 完成。`sync` 通过微信**内网** `cloud.callContainer` 调用容器，请求头自动带 `X-WX-SERVICE` 指定服务名（代码已实现）
+4. 「服务设置」确认监听端口 = **80**（控制台端口固定，Dockerfile 已按 80 配置，两边必须一致，否则报端口异常）
+5. 关闭公网访问（只用内网即可，可杜绝 DDoS 计费风险）
+6. 云函数 `sync` 加环境变量：`FACTORY_SERVICE = oldbuddy-factory`
+7. 完成。`sync` 通过微信**内网** `cloud.callContainer` 调用容器，请求头自动带 `X-WX-SERVICE` 指定服务名（代码已实现）
 
 **为什么不需要域名 / IP / 备案：**
 - 域名与备案是「**小程序客户端直接请求外部网址**」时才需要（要配 mp 后台的服务器域名）
@@ -152,8 +162,12 @@ curl "http://localhost:8800/api/v1/activities?limit=20"
 | 仅 HTTP、单端口 | 不支持 TCP/UDP、不支持多监听端口 | 无影响（FastAPI 单端口 HTTP） |
 | 不支持公网 IP 访问 | 只能走域名 | 无影响（我们走内网） |
 | **不支持有状态服务** | 不能部署数据库 / Redis | 数据存云数据库，容器只做无状态计算 |
+| **不能直连云开发数据库** | 仅 Node.js 可用 SDK 访问 | 无影响——容器只产数据，由 `sync` 云函数写库 |
 | **容器无持久化存储** | 重启/扩缩容会还原文件 | 不落盘文件，图片走云存储 |
-| callContainer 请求 ≤ 100K | 请求体不宜含图片 | 我们是 GET 拉数据，请求极小 |
+| **出口 IP 不固定** | 固定出口 IP 是付费能力 | 高德/开放数据不校验调用方 IP，无影响 |
+| **系统时区为 UTC** | 与上海时间差 8 小时 | Dockerfile 已装 tzdata 并设 `TZ=Asia/Shanghai` |
+| callContainer 请求 ≤ 100K / 回包 ≤ 1000K | 请求体不宜含图片 | 我们是 GET 拉数据，请求极小 |
+
 | callContainer 超时 15s | 小程序/公众号侧限制 | 云函数调用的 `sync` 若拉取慢，用定时触发器跑（无 15s 限制） |
 | 缩容到 0 会冷启动 | 半小时无请求缩容，首次请求变慢 | 数据工厂每天跑一次，可接受；介意就把最小副本设为 1（持续计费） |
 
