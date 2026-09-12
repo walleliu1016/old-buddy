@@ -2,7 +2,8 @@
 // 触发方式：① 定时触发器（见 config.json）② 被 activities 云函数空库自愈调用 ③ 手动 callFunction
 //
 // 环境变量（数据工厂接入方式二选一）：
-//   FACTORY_SERVICE  数据工厂的「微信云托管」服务名（推荐：内网 callContainer，免公网/免备案/免鉴权 IP）
+//   FACTORY_SERVICE  数据工厂的「微信云托管」服务名（推荐：内网 callContainer，免公网/域名/备案）
+//   FACTORY_ENV      云托管环境 ID（一般不用填：同环境调用自动使用当前环境）
 //   FACTORY_BASE     数据工厂公网地址，如 https://factory.example.com（自建服务器时用）
 //   ADMIN_KEY        数据工厂 admin key（仅 FACTORY_BASE 模式需要）
 //
@@ -14,15 +15,24 @@ const cmd = db.command;
 const https = require('https');
 
 const FACTORY_SERVICE = process.env.FACTORY_SERVICE || '';
+const FACTORY_ENV = process.env.FACTORY_ENV || '';
 const FACTORY_BASE = process.env.FACTORY_BASE || '';
 const ADMIN_KEY = process.env.ADMIN_KEY || '';
 
 // 统一取数：优先云托管内网 callContainer，其次公网 HTTPS
+// 注意：callContainer 必须带 X-WX-SERVICE 头指定服务名，否则路由不到服务
 async function fetchFactory(path) {
   if (FACTORY_SERVICE) {
-    const res = await cloud.callContainer({ path: path, method: 'GET' });
+    const param = {
+      path: path,
+      method: 'GET',
+      header: { 'X-WX-SERVICE': FACTORY_SERVICE, 'X-WX-EXCLUDE-CREDENTIALS': 'unionid, cloudbase-access-token, openid' }
+    };
+    if (FACTORY_ENV) param.config = { env: FACTORY_ENV };
+    const res = await cloud.callContainer(param);
     if (res && res.statusCode === 200) return JSON.stringify(res.data);
-    throw new Error('callContainer statusCode=' + (res && res.statusCode));
+    throw new Error('callContainer statusCode=' + (res && res.statusCode) +
+      ' body=' + JSON.stringify((res && res.data) || null).slice(0, 200));
   }
   if (FACTORY_BASE) return httpGet(FACTORY_BASE + path);
   throw new Error('未配置数据工厂（FACTORY_SERVICE / FACTORY_BASE）');

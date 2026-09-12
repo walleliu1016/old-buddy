@@ -349,6 +349,13 @@ async def on_start():
         pass
 
 
+@app.get("/")
+def root():
+    """云托管健康检查 / 探活根路由（避免服务被判定不健康）。"""
+    return {"ok": True, "service": "old-buddy-factory",
+            "docs": "/docs", "records": len(CACHE["records"])}
+
+
 @app.get("/api/v1/activities")
 def api_activities(limit: int = Query(200, ge=1, le=1000), kind: str = Query("")):
     """云函数 sync 来拉这个。返回归一化+地理编码+AI改写后的活动列表。"""
